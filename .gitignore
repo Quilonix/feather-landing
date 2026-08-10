@@ -1,0 +1,8 @@
+node_modules/
+.DS_Store
+Thumbs.db
+*.log
+# Keys and credentials never belong in a repo, even a static one.
+*.pem
+*.key
+.env

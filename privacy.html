@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Privacy policy - Feather</title>
+<meta name="description" content="Feather's privacy policy. Documents are converted locally in your browser and never uploaded. Only anonymous, non-identifying usage counts are collected." />
+<meta name="color-scheme" content="light" />
+<link rel="canonical" href="https://quilonix.github.io/feather-landing/privacy.html" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<a class="skip" href="#doc">Skip to content</a>
+
+<header class="masthead">
+  <div class="wrap masthead__inner">
+    <a class="brand" href="./">
+      <span class="brand__mark" aria-hidden="true">F</span>
+      <span>Feather</span>
+    </a>
+    <div class="masthead__meta" aria-hidden="true">
+      <span>Privacy policy</span>
+      <span>Effective 2026-08-10</span>
+    </div>
+    <nav class="masthead__nav" aria-label="Primary">
+      <a class="masthead__link" href="./">Home</a>
+      <a class="masthead__link" href="https://github.com/Quilonix/feather">Source</a>
+    </nav>
+  </div>
+</header>
+
+<main class="doc" id="doc">
+  <div class="wrap">
+
+    <div class="doc__head">
+      <h1 style="font-size:clamp(30px,5.6vw,58px)">Privacy policy</h1>
+      <div class="doc__meta">
+        <span>Effective date: 2026-08-10</span>
+        <span>Last updated: 2026-08-10</span>
+        <span>Applies to: Feather Chrome extension and this website</span>
+      </div>
+    </div>
+
+    <div class="doc__layout">
+
+      <nav class="doc__toc" aria-label="Contents">
+        <h2>Contents</h2>
+        <ol>
+          <li><a href="#summary">Summary</a></li>
+          <li><a href="#who">Who is responsible</a></li>
+          <li><a href="#not-collected">What we never collect</a></li>
+          <li><a href="#collected">What we do collect</a></li>
+          <li><a href="#on-device">Data kept on your device</a></li>
+          <li><a href="#byok">Optional AI providers</a></li>
+          <li><a href="#permissions">Permissions and why</a></li>
+          <li><a href="#processors">Third parties and transfers</a></li>
+          <li><a href="#retention">Retention</a></li>
+          <li><a href="#rights">Your rights</a></li>
+          <li><a href="#optout">How to stop collection</a></li>
+          <li><a href="#security">Security</a></li>
+          <li><a href="#children">Children</a></li>
+          <li><a href="#website">This website</a></li>
+          <li><a href="#changes">Changes</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ol>
+      </nav>
+
+      <div class="prose">
+
+        <section id="summary">
+          <h2>1. Summary</h2>
+          <p>
+            Feather converts documents into Markdown entirely inside your
+            browser. Your files are never uploaded, because the extension has
+            no server to upload them to. The only data that leaves your browser
+            is a small set of anonymous, non-identifying usage counts described
+            in section 4, plus any request you deliberately trigger by adding
+            your own AI provider key as described in section 6.
+          </p>
+          <div class="callout">
+            <p>
+              <strong>In one line:</strong> we do not receive your documents,
+              your filenames, your converted Markdown, or your conversations.
+              We receive counts.
+            </p>
+          </div>
+        </section>
+
+        <section id="who">
+          <h2>2. Who is responsible</h2>
+          <p>
+            Feather is published by Quilonix, which is the data controller for
+            the limited processing described here. You can reach us at
+            <a href="mailto:contact@quilonix.in">contact@quilonix.in</a> for any
+            privacy question or request.
+          </p>
+        </section>
+
+        <section id="not-collected">
+          <h2>3. What we never collect</h2>
+          <p>
+            The following never leaves your browser and is never transmitted to
+            us or to any third party by the extension:
+          </p>
+          <ul>
+            <li>The contents of any file you convert.</li>
+            <li>Filenames, file paths, or file metadata.</li>
+            <li>The Markdown that Feather produces.</li>
+            <li>Images or figures extracted from your documents.</li>
+            <li>The text of any chat conversation you extract.</li>
+            <li>Your name, email address, IP-based profile, or any account identifier. Feather has no accounts and no sign-in.</li>
+            <li>Anything from web pages other than the supported AI chat sites listed in the extension's manifest. Feather does not run on any other page.</li>
+          </ul>
+          <p>
+            Document parsing, table detection, image extraction and OCR all run
+            as WebAssembly and JavaScript inside the tab you are already on.
+          </p>
+        </section>
+
+        <section id="collected">
+          <h2>4. What we do collect</h2>
+          <p>
+            Feather sends anonymous usage events so we can tell how many people
+            install it and whether they keep using it. Events are sent by a
+            direct HTTPS request to PostHog Cloud (EU region). No remote script
+            is loaded.
+          </p>
+          <p>
+            Each event carries a <strong>random identifier</strong> generated
+            once on your device with <code>crypto.randomUUID()</code> and stored
+            locally. It is not derived from your hardware, your browser
+            fingerprint, your IP address, or any account. It is not linked to
+            any identity, and we cannot use it to contact you or recognise you
+            anywhere else.
+          </p>
+
+          <h3>The complete list of events</h3>
+          <div class="table-scroll" style="margin-top:14px">
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col">Event</th>
+                  <th scope="col">When</th>
+                  <th scope="col">Properties sent</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="mono">extension_installed</td>
+                  <td>Once, on first install</td>
+                  <td class="mono">none</td>
+                </tr>
+                <tr>
+                  <td class="mono">extension_active</td>
+                  <td>At most once per calendar day, when the widget loads on a supported site</td>
+                  <td class="mono">hostname</td>
+                </tr>
+                <tr>
+                  <td class="mono">file_converted</td>
+                  <td>A file finished converting</td>
+                  <td class="mono">fileExtension, tokenSavingsPercent, imagesExtracted, hostname</td>
+                </tr>
+                <tr>
+                  <td class="mono">file_conversion_failed</td>
+                  <td>A file could not be converted</td>
+                  <td class="mono">fileExtension</td>
+                </tr>
+                <tr>
+                  <td class="mono">chat_extracted</td>
+                  <td>Extract Chat pulled a conversation</td>
+                  <td class="mono">hostname</td>
+                </tr>
+                <tr>
+                  <td class="mono">chat_summarized</td>
+                  <td>The optional AI pass on a chat finished</td>
+                  <td class="mono">hostname, tokenSavingsPercent</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p>
+            <code>hostname</code> is the site the action happened on, for
+            example <code>chatgpt.com</code>. It is never the full URL, never a
+            page title, and never any part of the page content.
+            <code>fileExtension</code> is a type such as <code>pdf</code>.
+            <code>tokenSavingsPercent</code> and <code>imagesExtracted</code>
+            are numbers. That is the entire payload.
+          </p>
+          <p>
+            The purpose is aggregate product measurement: install counts, daily
+            and monthly active counts, which formats are actually used, and
+            whether conversion is failing. Our legal basis under the GDPR is
+            legitimate interest in understanding and maintaining the product,
+            using the least identifying data that serves that purpose.
+          </p>
+        </section>
+
+        <section id="on-device">
+          <h2>5. Data kept on your device</h2>
+          <p>
+            The following is stored by the extension on your own machine and is
+            not sent to us.
+          </p>
+          <ul>
+            <li><strong>Settings</strong> in <code>chrome.storage.sync</code>: your theme choice, whether Feather is disabled globally or on specific sites, and which AI mode you picked. Because this uses Chrome's sync storage, Google may replicate it across Chrome profiles you are signed into, under Google's own privacy policy.</li>
+            <li><strong>Your API key</strong>, if you add one, in <code>chrome.storage.local</code>. Local storage is deliberately used instead of sync storage so a pasted key does not leave the device it was typed into. It is stored unencrypted, because Chrome extension storage has no encryption at rest. Do not use a key you would not want readable by something else with access to this profile.</li>
+            <li><strong>The anonymous identifier</strong> and the date of the last daily-active event, in <code>chrome.storage.local</code>.</li>
+            <li><strong>The widget's position</strong> on screen, in the page's <code>localStorage</code>, so it stays where you dragged it.</li>
+          </ul>
+          <p>
+            Uninstalling the extension removes all of it. Clearing site data for
+            a given site removes the stored widget position for that site.
+          </p>
+        </section>
+
+        <section id="byok">
+          <h2>6. Optional AI providers</h2>
+          <p>
+            Feather works fully without any API key. If you choose to enable the
+            optional compression pass, you supply your own key for either Groq
+            or Google Gemini. In that case, and only in that case:
+          </p>
+          <ul>
+            <li>The already-converted Markdown is sent directly from your browser to the provider you chose, authenticated with your key.</li>
+            <li>It is not routed through any server of ours. We never see the content, and we never see your key.</li>
+            <li>That provider's own privacy policy and data handling apply to those requests. Review <a href="https://groq.com/privacy-policy/" rel="noopener">Groq's policy</a> or <a href="https://ai.google.dev/gemini-api/terms" rel="noopener">Google's Gemini API terms</a> before enabling it.</li>
+            <li>You can remove the key at any time from the extension's settings, which returns Feather to fully local operation.</li>
+          </ul>
+          <p>
+            This feature is off unless you turn it on and paste a key.
+          </p>
+        </section>
+
+        <section id="permissions">
+          <h2>7. Permissions and why each is needed</h2>
+          <ul>
+            <li><code>storage</code> - saves the settings and the optional API key described in section 5.</li>
+            <li><code>activeTab</code> and <code>tabs</code> - reads the current tab's hostname so the toolbar popup can tell whether you are on a supported AI site and offer a per-site on/off toggle. It is not used to read page content or browsing history.</li>
+            <li>Host permissions for the listed AI chat sites - injects the converter widget into those pages and inserts the converted Markdown into the site's own chat input. Feather runs on no other site.</li>
+            <li><code>eu.i.posthog.com</code> - sends the anonymous events in section 4.</li>
+            <li><code>api.groq.com</code> and <code>generativelanguage.googleapis.com</code> - used only if you supply your own key, as described in section 6.</li>
+          </ul>
+          <p>
+            Feather requests no other permissions. It does not use the
+            <code>downloads</code>, <code>scripting</code>, <code>history</code>,
+            <code>cookies</code>, or <code>webRequest</code> permissions.
+          </p>
+        </section>
+
+        <section id="processors">
+          <h2>8. Third parties and international transfers</h2>
+          <ul>
+            <li><strong>PostHog</strong> processes the anonymous events on our behalf. We use PostHog Cloud's EU region, so those events are ingested and stored in the European Union.</li>
+            <li><strong>Groq</strong> and <strong>Google</strong> receive content only if you enable the optional pass with your own key, as your own API usage.</li>
+            <li><strong>GitHub</strong> hosts this website and the source code. If you visit either, GitHub processes standard request data such as your IP address for security and abuse prevention, under GitHub's privacy statement. We do not add analytics to this website.</li>
+          </ul>
+          <p>
+            We do not sell personal data, we do not share it with advertisers,
+            we do not run ad or affiliate networks, and we do not track you
+            across sites.
+          </p>
+        </section>
+
+        <section id="retention">
+          <h2>9. Retention</h2>
+          <p>
+            Anonymous events are retained in PostHog only as long as they are
+            useful for aggregate product measurement, and are reviewed
+            periodically. Because the events contain no identifiers beyond a
+            random per-browser value and no content, retaining them does not
+            accumulate a profile of any individual. Data on your device stays
+            until you remove the extension or clear it yourself.
+          </p>
+        </section>
+
+        <section id="rights">
+          <h2>10. Your rights</h2>
+          <p>
+            Depending on where you live, you may have rights to access,
+            correction, deletion, restriction, objection, or portability of
+            personal data, and the right to complain to a supervisory authority.
+          </p>
+          <p>
+            We should be straightforward about a limitation here: because the
+            analytics identifier is a random value with nothing linking it to
+            you, we generally cannot locate "your" events on request. If you
+            want your identifier's events deleted, you can find it in the
+            extension's local storage under <code>fdDistinctId</code> and send
+            it to us, and we will delete events matching it. Otherwise, the most
+            complete and immediate remedy is section 11, which stops collection
+            entirely.
+          </p>
+        </section>
+
+        <section id="optout">
+          <h2>11. How to stop collection</h2>
+          <ul>
+            <li><strong>Disable Feather</strong> from the toolbar popup, either globally or per site. The widget then does not load, so no usage events are sent.</li>
+            <li><strong>Uninstall the extension</strong> from <code>chrome://extensions</code>. This stops all events and deletes everything stored on your device.</li>
+            <li><strong>Block the endpoint</strong> at the network level if you prefer. The extension is built so that analytics failures are swallowed and never affect conversion, so blocking it does not break anything.</li>
+          </ul>
+        </section>
+
+        <section id="security">
+          <h2>12. Security</h2>
+          <p>
+            All network requests the extension makes use HTTPS. The extension
+            ships no remotely-hosted code, which is both a Chrome requirement
+            and a deliberate choice: everything that runs is in the package and
+            can be reviewed in the public repository. Releases are published
+            with a SHA-256 checksum so you can verify the artifact you install
+            matches the one we built.
+          </p>
+          <p>
+            No system is perfectly secure. If you find a vulnerability, please
+            report it privately to
+            <a href="mailto:contact@quilonix.in">contact@quilonix.in</a> rather
+            than opening a public issue.
+          </p>
+        </section>
+
+        <section id="children">
+          <h2>13. Children</h2>
+          <p>
+            Feather is a productivity tool for general audiences and is not
+            directed at children. We do not knowingly collect personal data from
+            children, and the extension collects no personal data from anyone.
+          </p>
+        </section>
+
+        <section id="website">
+          <h2>14. This website</h2>
+          <p>
+            This site is a static page. It sets no cookies, loads no web fonts,
+            embeds no third-party scripts, and runs no analytics. The only
+            requests it makes are for its own HTML and CSS. Your hosting-level
+            request data is handled by GitHub as described in section 8.
+          </p>
+        </section>
+
+        <section id="changes">
+          <h2>15. Changes</h2>
+          <p>
+            If this policy changes, the effective date at the top of this page
+            changes with it, and the previous versions remain visible in the
+            public repository's history. If a change materially expands what we
+            collect, we will note it in the extension's release notes rather
+            than changing it quietly.
+          </p>
+        </section>
+
+        <section id="contact">
+          <h2>16. Contact</h2>
+          <p>
+            Questions, requests, or corrections:
+            <a href="mailto:contact@quilonix.in">contact@quilonix.in</a>.
+          </p>
+        </section>
+
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer__base" style="border-top:var(--border-w) solid var(--ink);padding-top:20px">
+      <span>Feather by Quilonix. All rights reserved.</span>
+      <span><a href="./">Back to home</a></span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

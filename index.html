@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Feather - Documents to Markdown, entirely in your browser</title>
+<meta name="description" content="Feather is a Chrome extension that converts PDF, Word, Excel and PowerPoint into clean Markdown locally in your browser, then attaches it to your AI chat. No upload, no account, no API key." />
+<meta name="color-scheme" content="light" />
+<link rel="canonical" href="https://quilonix.github.io/feather-landing/" />
+
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Feather - Documents to Markdown, entirely in your browser" />
+<meta property="og:description" content="Converts documents to clean Markdown locally and attaches them to your AI chat. Nothing is uploaded. No account, no API key." />
+<meta property="og:url" content="https://quilonix.github.io/feather-landing/" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Feather - Documents to Markdown, entirely in your browser" />
+<meta name="twitter:description" content="Converts documents to clean Markdown locally and attaches them to your AI chat. Nothing is uploaded." />
+
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="masthead">
+  <div class="wrap masthead__inner">
+    <a class="brand" href="./">
+      <span class="brand__mark" aria-hidden="true">F</span>
+      <span>Feather</span>
+    </a>
+    <div class="masthead__meta" aria-hidden="true">
+      <span>Doc to Markdown</span>
+      <span>Rev 2026.8.10</span>
+      <span>Runs local</span>
+    </div>
+    <nav class="masthead__nav" aria-label="Primary">
+      <a class="masthead__link masthead__link--hide" href="#formats">Formats</a>
+      <a class="masthead__link masthead__link--hide" href="#privacy">Privacy</a>
+      <a class="masthead__link" href="https://github.com/Quilonix/feather">Source</a>
+      <a class="btn btn--sm btn--solid" href="#install">Install</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ── Hero ────────────────────────────────────────────────────────────── -->
+  <section class="hero">
+    <div class="hero__inner">
+      <div class="hero__main">
+        <span class="hero__eyebrow">Chrome extension / free</span>
+        <h1>Documents in.<br />Markdown out.<br /><em>Nothing leaves</em><br />your browser.</h1>
+        <p class="hero__sub">
+          Feather converts PDF, Word, Excel and PowerPoint into clean Markdown
+          and drops it straight into your AI chat's message box. The parsing,
+          the OCR, the table detection: all of it runs locally in the page.
+          There is no server to send your documents to.
+        </p>
+        <div class="hero__actions">
+          <a class="btn btn--solid" href="#install">Get Feather</a>
+          <a class="btn" href="https://github.com/Quilonix/feather">Read the source</a>
+        </div>
+        <p class="hero__note">
+          No account. No API key. No per-user cost. Works on 21 AI chat sites.
+        </p>
+      </div>
+
+      <aside class="hero__spec" aria-label="Specifications">
+        <p class="spec__title">Specification</p>
+        <dl>
+          <div class="spec__row"><dt>Part</dt><dd>Feather</dd></div>
+          <div class="spec__row"><dt>Revision</dt><dd>2026.8.10</dd></div>
+          <div class="spec__row"><dt>Platform</dt><dd>Chrome / MV3</dd></div>
+          <div class="spec__row"><dt>Input formats</dt><dd>10</dd></div>
+          <div class="spec__row"><dt>Supported sites</dt><dd>21</dd></div>
+          <div class="spec__row"><dt>Processing</dt><dd>In-browser</dd></div>
+          <div class="spec__row"><dt>Backend</dt><dd>None</dd></div>
+          <div class="spec__row"><dt>Account</dt><dd>Not required</dd></div>
+          <div class="spec__row"><dt>Batch limit</dt><dd>5 files</dd></div>
+          <div class="spec__row"><dt>Max file size</dt><dd>40 MB</dd></div>
+          <div class="spec__row"><dt>Price</dt><dd>Free</dd></div>
+        </dl>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ── Site ticker ─────────────────────────────────────────────────────── -->
+  <div class="ticker" aria-label="Supported sites">
+    <div class="ticker__track">
+      <div class="ticker__group">
+        <span class="ticker__item">Claude</span><span class="ticker__item">ChatGPT</span><span class="ticker__item">Gemini</span><span class="ticker__item">Copilot</span><span class="ticker__item">Perplexity</span><span class="ticker__item">Poe</span><span class="ticker__item">Mistral</span><span class="ticker__item">HuggingChat</span><span class="ticker__item">Character.AI</span><span class="ticker__item">You.com</span><span class="ticker__item">Grok</span><span class="ticker__item">DeepSeek</span><span class="ticker__item">Qwen</span><span class="ticker__item">Kimi</span><span class="ticker__item">Meta AI</span><span class="ticker__item">Pi</span><span class="ticker__item">Cohere Coral</span><span class="ticker__item">Groq</span><span class="ticker__item">Z.ai</span><span class="ticker__item">Reka</span><span class="ticker__item">DuckDuckGo AI</span>
+      </div>
+      <div class="ticker__group" aria-hidden="true">
+        <span class="ticker__item">Claude</span><span class="ticker__item">ChatGPT</span><span class="ticker__item">Gemini</span><span class="ticker__item">Copilot</span><span class="ticker__item">Perplexity</span><span class="ticker__item">Poe</span><span class="ticker__item">Mistral</span><span class="ticker__item">HuggingChat</span><span class="ticker__item">Character.AI</span><span class="ticker__item">You.com</span><span class="ticker__item">Grok</span><span class="ticker__item">DeepSeek</span><span class="ticker__item">Qwen</span><span class="ticker__item">Kimi</span><span class="ticker__item">Meta AI</span><span class="ticker__item">Pi</span><span class="ticker__item">Cohere Coral</span><span class="ticker__item">Groq</span><span class="ticker__item">Z.ai</span><span class="ticker__item">Reka</span><span class="ticker__item">DuckDuckGo AI</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Problem ─────────────────────────────────────────────────────────── -->
+  <section class="section">
+    <div class="wrap">
+      <div class="section__head">
+        <span class="section__index">01</span>
+        <h2>Why a PDF costs more than it should</h2>
+      </div>
+      <p class="lede">
+        Some tools ingest a PDF by rasterizing every page into an image for a
+        vision encoder rather than extracting the text. That costs tokens by
+        page <em>area</em>, not by how much text is actually on the page, so a
+        mostly-empty 100-page document can cost as much as a dense one.
+      </p>
+      <p class="lede">
+        Feather extracts the real text, detects tables from column positions,
+        pulls embedded images out as real files, and runs OCR only on the pages
+        that genuinely need it. You hand the model clean Markdown instead of
+        pictures of paper.
+      </p>
+
+      <div class="figures" style="margin-top:34px">
+        <div class="figure">
+          <p class="figure__value">0-15%</p>
+          <p class="figure__label">Text vs Markdown, measured <sup>1</sup></p>
+        </div>
+        <div class="figure">
+          <p class="figure__value">w&#215;h/750</p>
+          <p class="figure__label">Image token formula <sup>2</sup></p>
+        </div>
+        <div class="figure">
+          <p class="figure__value">0</p>
+          <p class="figure__label">Bytes uploaded</p>
+        </div>
+        <div class="figure">
+          <p class="figure__value">21</p>
+          <p class="figure__label">Supported chat sites</p>
+        </div>
+      </div>
+
+      <div class="footnotes">
+        <p class="footnote">
+          1. Apples to apples, both sides plain text, measured by the shipped
+          converter using the same tokenizer. This isolates the formatting
+          effect only, and it is small. Markdown is structure, not compression.
+        </p>
+        <p class="footnote">
+          2. An estimate based on the publicly documented image tokenization
+          formula, not a measurement of any specific tool's internal pipeline.
+          This is where large real-world savings come from, and it only applies
+          when the alternative was image-based ingestion.
+        </p>
+        <p class="footnote">
+          There is no single guaranteed savings percentage across all documents
+          and all tools. Anyone claiming one is guessing. Run
+          <span class="mono">npm run test:tokens</span> in the repo and measure
+          your own files.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── How ─────────────────────────────────────────────────────────────── -->
+  <section class="section">
+    <div class="wrap">
+      <div class="section__head">
+        <span class="section__index">02</span>
+        <h2>How it works</h2>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <div class="step__body">
+            <h3>Click the pill, or drag files onto it</h3>
+            <p>
+              A small pill sits in the bottom-right corner of every supported
+              site. Drag it anywhere you like; it stays there. Drop up to five
+              files at once.
+            </p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step__body">
+            <h3>Conversion runs in the page</h3>
+            <p>
+              pdf.js, mammoth, SheetJS and Tesseract OCR all run as WebAssembly
+              and JavaScript inside the tab. No request is made, because there
+              is nowhere to send it.
+            </p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step__body">
+            <h3>Attach or download</h3>
+            <p>
+              Attach puts the Markdown straight into the site's chat input.
+              Download saves the file, or a zip containing the Markdown plus
+              every extracted image when the document had figures.
+            </p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step__body">
+            <h3>Optionally, extract a whole conversation</h3>
+            <p>
+              Extract Chat pulls the conversation you are looking at out of the
+              page as Markdown, so you can carry context into a fresh chat or
+              another tool without copy-pasting turn by turn.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Formats ─────────────────────────────────────────────────────────── -->
+  <section class="section" id="formats">
+    <div class="wrap">
+      <div class="section__head">
+        <span class="section__index">03</span>
+        <h2>Formats and fidelity</h2>
+      </div>
+      <div class="table-scroll">
+        <table>
+          <caption>What each converter actually does</caption>
+          <thead>
+            <tr>
+              <th scope="col">Format</th>
+              <th scope="col">Fidelity notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="mono">.pdf</td><td>Text extracted directly. Tables detected by column position. Embedded raster images extracted. Scanned pages OCR'd with Tesseract.</td></tr>
+            <tr><td class="mono">.docx</td><td>Full fidelity through mammoth: headings, lists, tables, bold and italic. Images extracted as real files, not inlined base64.</td></tr>
+            <tr><td class="mono">.pptx</td><td>Slide text plus embedded images, resolved through the OOXML relationship graph.</td></tr>
+            <tr><td class="mono">.xlsx .xls</td><td>Every cell value preserved exactly. Emitted as CSV rather than padded Markdown tables, which benchmarked cheaper in tokens.</td></tr>
+            <tr><td class="mono">.csv</td><td>Passed through as-is.</td></tr>
+            <tr><td class="mono">.html .htm</td><td>Converted with Turndown.</td></tr>
+            <tr><td class="mono">.odt</td><td>Parsed from its real semantic XML: headings and paragraphs.</td></tr>
+            <tr><td class="mono">.rtf</td><td>Parsed by control-word heuristics. Heading levels inferred from font size.</td></tr>
+            <tr><td class="mono">.txt .md</td><td>Passed through.</td></tr>
+            <tr><td class="mono">.doc .ppt</td><td><strong>Not supported.</strong> The pre-2007 binary formats cannot be parsed reliably in a browser. Feather says so instead of failing silently. Re-save as .docx or .pptx.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Privacy ─────────────────────────────────────────────────────────── -->
+  <section class="section section--invert" id="privacy">
+    <div class="wrap">
+      <div class="section__head">
+        <span class="section__index">04</span>
+        <h2>What leaves your browser</h2>
+      </div>
+      <div class="grid">
+        <div class="card">
+          <p class="card__n">Never sent</p>
+          <h3>Your documents</h3>
+          <p>
+            File contents, filenames, and the converted Markdown never leave
+            the tab. There is no backend, no storage bucket, and no upload
+            endpoint anywhere in the extension.
+          </p>
+        </div>
+        <div class="card">
+          <p class="card__n">Never sent</p>
+          <h3>Your conversations</h3>
+          <p>
+            Extract Chat reads the page you are on and writes the result to
+            your clipboard and the panel. The text of the conversation is not
+            transmitted.
+          </p>
+        </div>
+        <div class="card">
+          <p class="card__n">Sent</p>
+          <h3>Anonymous counts</h3>
+          <p>
+            A random ID, which site a conversion happened on, the file
+            extension, and a token-savings percentage. That is the entire
+            payload. No content, ever.
+          </p>
+        </div>
+        <div class="card">
+          <p class="card__n">Only if you opt in</p>
+          <h3>Your own API calls</h3>
+          <p>
+            If you add your own Groq or Gemini key for the optional AI pass,
+            the Markdown goes to that provider under your key. It never
+            reaches us. The key is stored on your device only.
+          </p>
+        </div>
+      </div>
+      <div class="footnotes">
+        <p class="footnote">
+          Full detail, including the exact event list and the third parties
+          involved, is in the <a href="privacy.html">privacy policy</a>.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── BYOK ────────────────────────────────────────────────────────────── -->
+  <section class="section">
+    <div class="wrap">
+      <div class="section__head">
+        <span class="section__index">05</span>
+        <h2>Optional: bring your own key</h2>
+      </div>
+      <div class="notice">
+        <p class="notice__tag">Optional / off by default</p>
+        <div class="notice__body">
+          <p>
+            Local conversion already works with zero setup and no key. If you
+            want a second pass that compresses the Markdown further, you can
+            add your own Groq or Gemini key. Both have free tiers.
+          </p>
+          <p>
+            The two passes are deliberately different. On a document, the
+            prompt is lossless: keep every fact, table, number and named
+            entity, and remove only genuine boilerplate. On a chat transcript,
+            it is allowed to summarize, because most of a transcript's length
+            is not load-bearing once you have the outcome.
+          </p>
+          <p>
+            It fails safe. If the pass fails, you still get the local result.
+            Feather never produces nothing because an optional step did not
+            work.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Limits ──────────────────────────────────────────────────────────── -->
+  <section class="section">
+    <div class="wrap">
+      <div class="section__head">
+        <span class="section__index">06</span>
+        <h2>What it does not do</h2>
+      </div>
+      <p class="lede" style="margin-bottom:24px">
+        Every tool has edges. Publishing them is cheaper than having you find
+        them.
+      </p>
+      <ul class="list list--cross">
+        <li>Legacy <span class="mono">.doc</span> and <span class="mono">.ppt</span> are not supported. No reliable client-side parser exists for them.</li>
+        <li>PDF table detection is heuristic. It handles clean grid tables well and can misjudge unusual layouts.</li>
+        <li>Diagrams drawn as vector paths are not extracted as images. Capturing them would require rasterizing the page, which defeats the purpose.</li>
+        <li>OCR adds real time on scan-heavy PDFs. It only runs on pages that need it, but a fully scanned 100-page document still takes a while.</li>
+        <li>Hand-written attach adapters exist for three sites. Everywhere else uses generic strategies that work on many sites but are not verified per site, and fall back to download plus clipboard.</li>
+        <li>There is no single guaranteed token-savings number. See the footnotes above.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ── Install ─────────────────────────────────────────────────────────── -->
+  <section class="section" id="install">
+    <div class="wrap">
+      <div class="section__head">
+        <span class="section__index">07</span>
+        <h2>Install</h2>
+      </div>
+      <div class="grid">
+        <div class="card">
+          <p class="card__n">Option A / recommended</p>
+          <h3>Chrome Web Store</h3>
+          <p>
+            The published listing updates itself. The store submission is in
+            review; this link goes live when it is approved.
+          </p>
+          <p><a class="btn btn--sm btn--ghost" href="https://github.com/Quilonix/feather/releases">Check status</a></p>
+        </div>
+        <div class="card">
+          <p class="card__n">Option B / available now</p>
+          <h3>Manual install</h3>
+          <p>
+            Download the zip from the releases page and unzip it. Open
+            <span class="mono">chrome://extensions</span>, turn on Developer
+            mode, click Load unpacked, and select the folder.
+          </p>
+          <p><a class="btn btn--sm" href="https://github.com/Quilonix/feather/releases">Download zip</a></p>
+        </div>
+        <div class="card">
+          <p class="card__n">Option C</p>
+          <h3>From source</h3>
+          <p>
+            The built bundle is committed, so the repo loads unpacked with no
+            build step. Every release ships a checksum you can verify with
+            <span class="mono">sha256sum -c</span>.
+          </p>
+          <p><a class="btn btn--sm btn--ghost" href="https://github.com/Quilonix/feather">Open repo</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer__grid">
+      <div class="footer__col">
+        <h4>Product</h4>
+        <ul>
+          <li><a href="#formats">Supported formats</a></li>
+          <li><a href="#install">Install</a></li>
+          <li><a href="#privacy">What leaves your browser</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4>Project</h4>
+        <ul>
+          <li><a href="https://github.com/Quilonix/feather">Source code</a></li>
+          <li><a href="https://github.com/Quilonix/feather/releases">Releases</a></li>
+          <li><a href="https://github.com/Quilonix/feather/issues">Report an issue</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="privacy.html">Privacy policy</a></li>
+          <li><a href="mailto:contact@quilonix.in">contact@quilonix.in</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4>Status</h4>
+        <ul>
+          <li><span class="mono">Rev 2026.8.10</span></li>
+          <li><span class="mono">Runs local</span></li>
+          <li><span class="mono">No backend</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__base">
+      <span>Feather by Quilonix. All rights reserved.</span>
+      <span>Built as a static page. No trackers, no web fonts, no cookies.</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
