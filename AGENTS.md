@@ -54,18 +54,32 @@ muddy the shape at 17px.
 
 ## Design constraints
 
+The system is **editorial precision**: a serif display face, a grotesque for
+body copy, monospace reserved for data and metadata, hairline rules, and
+whitespace doing the work that borders and boxes usually do. The reference point
+is a well-set journal, not a SaaS template.
+
+- **Serif for display, sans for body, mono for data.** The serif is the point of
+  difference: surveys put sans-serif usage in SaaS above 90%, so a serif display
+  face is the cheapest way to look unlike the category while still reading as
+  serious. Do not "simplify" headings to the sans stack.
 - **No CSS framework and no web fonts.** Both are deliberate. A privacy-first
-  product should not make third-party requests on its own marketing page.
-- **Two palettes, ink and paper, and nothing else.** Every colour token must be
-  defined in both the `:root` and the `html[data-theme="dark"]` block, or it
-  silently keeps its light value in dark mode. `verify.mjs` checks this.
-- No rule may hardcode a colour. All colour lives in the palette blocks.
+  product should not make third-party requests on its own marketing page, and
+  system stacks mean no render blocking and no layout shift.
+- **Two palettes, warm neutral only.** Every colour token must be defined in
+  both the `:root` and the `html[data-theme="dark"]` block, or it silently keeps
+  its light value in dark mode. `verify.mjs` checks this.
+- No rule may hardcode a colour. All colour lives in the palette blocks. That
+  includes shadows, which are tokens (`--lift-1` through `--lift-3`).
+- **Depth is almost subliminal.** Soft two-layer elevation and hairlines only.
+  No hard offset blocks, no 2px slab borders, no high-contrast square panels.
+  Anything heavier turns editorial into corporate.
+- Paper is a warm off-white and ink is off-black, on purpose. Pure white behind a
+  large serif glares, and true black on warm white vibrates.
 - Dark mode is keyed off `[data-theme]`, **not** an `@media` query, because a
   media query cannot be overridden from script and the explicit Light and Dark
   choices have to win. `theme-boot.js` sets the attribute before first paint so
   there is no flash; keep it a classic script in `<head>`.
-- Square corners, hard offset blocks for depth, no border radius, no blur, no
-  gradients on surfaces.
 - Respect `prefers-reduced-motion`. The ticker must stop and the reveal
   animation must not run. The reveal's hidden state is applied only from script,
   so a visitor without JavaScript sees everything.

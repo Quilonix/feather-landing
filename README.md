@@ -33,20 +33,26 @@ python -m http.server 8080
 
 ## Design
 
-The aesthetic is a technical datasheet: hard black rules, square corners,
-dense tabular data, monospace for anything measurable, and depth from hard
-offset blocks rather than soft shadows. Two colours, ink and paper.
+The system is **editorial precision**: a serif display face, a grotesque for
+body copy, monospace reserved for data and metadata, hairline rules, soft
+low elevation, and generous whitespace. The reference point is a well-set
+journal or annual report rather than a SaaS template.
+
+The serif is the deliberate point of difference. Surveys of SaaS typography put
+sans-serif usage above 90%, so a serif display face is the cheapest way to look
+unlike the category while still reading as serious, and it suits a product about
+documents.
 
 Two constraints are deliberate and worth keeping:
 
 - **No CSS framework.** The page is smaller than any framework it could use.
 - **No web fonts.** A product whose entire pitch is that it does not upload
   your documents should not make a third-party font request on its own
-  marketing page. System font stacks only, which also means no render
-  blocking and no layout shift.
+  marketing page. System stacks only, which also means no render blocking and
+  no layout shift.
 
-All colour lives in custom properties at the top of `styles.css`. No rule
-hardcodes a hex value.
+All colour lives in two palette blocks at the top of `styles.css`, one per
+theme. No rule hardcodes a colour, including shadows.
 
 ## Checks
 
