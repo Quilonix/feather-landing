@@ -38,6 +38,7 @@
     </div>
     <nav class="masthead__nav" aria-label="Primary">
       <a class="masthead__link masthead__link--hide" href="#how">How</a>
+      <a class="masthead__link masthead__link--hide" href="#extract">Extract chat</a>
       <a class="masthead__link masthead__link--hide" href="#formats">Formats</a>
       <a class="masthead__link masthead__link--hide" href="#privacy">Privacy</a>
       <div class="theme-switch" role="group" aria-label="Colour theme">
@@ -60,9 +61,10 @@
         <h1>Documents in.<br />Markdown out.<br /><em>Nothing leaves</em><br />your browser.</h1>
         <p class="hero__sub">
           Feather converts PDF, Word, Excel and PowerPoint into clean Markdown
-          and drops it straight into your AI chat's message box. The parsing,
-          the OCR, the table detection: all of it runs locally in the page.
-          There is no server to send your documents to.
+          and drops it straight into your AI chat's message box. It also lifts
+          an entire conversation back out again, so you can carry it to a
+          different model. All of it runs locally in the page. There is no
+          server to send your documents to.
         </p>
         <div class="hero__actions">
           <a class="btn btn--solid" href="#install">Get Feather</a>
@@ -203,16 +205,75 @@
             </p>
           </div>
         </div>
-        <div class="step">
-          <div class="step__body">
-            <h3>Optionally, extract a whole conversation</h3>
-            <p>
-              Extract Chat pulls the conversation you are looking at out of the
-              page as Markdown, so you can carry context into a fresh chat or
-              another tool without copy-pasting turn by turn.
-            </p>
-          </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Extract Chat ────────────────────────────────────────────────────── -->
+  <section class="section" id="extract">
+    <div class="wrap">
+      <div class="section__head" data-reveal>
+        <span class="section__index">03</span>
+        <h2>Move a conversation to another model</h2>
+      </div>
+      <p class="lede" data-reveal>
+        A chat is trapped in the tool you started it in. When you want a second
+        opinion from a different model, or you have hit a context limit and need
+        a fresh thread, the usual answer is scrolling and copy-pasting turn by
+        turn. Extract Chat lifts the whole conversation out as Markdown in one
+        click.
+      </p>
+      <div class="grid" style="margin-top:38px">
+        <div class="card" data-reveal>
+          <p class="card__n">Step one</p>
+          <h3>Copied before you can lose it</h3>
+          <p>
+            The transcript lands on your clipboard the moment it is extracted,
+            before anything else runs. Nothing to click first, and nothing to
+            lose if a later step fails.
+          </p>
         </div>
+        <div class="card" data-reveal data-delay="1">
+          <p class="card__n">Step two, option A</p>
+          <h3>Continue on another AI</h3>
+          <p>
+            Pick a destination and Feather opens it and attaches the transcript
+            for you. Claude, ChatGPT, Gemini, Perplexity, Grok, DeepSeek,
+            Mistral and Meta AI. If the attach does not take, the text is
+            already on your clipboard and shown in the panel to paste.
+          </p>
+        </div>
+        <div class="card" data-reveal data-delay="2">
+          <p class="card__n">Step two, option B</p>
+          <h3>Download it as Markdown</h3>
+          <p>
+            Save the conversation as a <span class="mono">.md</span> file for
+            your notes, an issue tracker, a commit message, or anywhere else
+            plain text belongs.
+          </p>
+        </div>
+        <div class="card" data-reveal data-delay="3">
+          <p class="card__n">Optional</p>
+          <h3>Condense it first</h3>
+          <p>
+            With your own API key, a second pass summarizes the transcript
+            instead of reproducing it: settled decisions, final answers and
+            load-bearing facts, without the back-and-forth that got there.
+          </p>
+        </div>
+      </div>
+      <div class="footnotes">
+        <p class="footnote">
+          Structure survives the trip. Code blocks stay fenced, lists stay
+          lists, and who said what is preserved. Extraction works on sites with
+          no hand-written adapter too, by detecting the repeated structure of
+          the conversation rather than relying on a known selector.
+        </p>
+        <p class="footnote">
+          It reads what the page has actually rendered. On a very long
+          conversation, some sites only keep recent turns in the document, so
+          scroll up to load the earlier ones before extracting.
+        </p>
       </div>
     </div>
   </section>
@@ -221,7 +282,7 @@
   <section class="section" id="formats">
     <div class="wrap">
       <div class="section__head" data-reveal>
-        <span class="section__index">03</span>
+        <span class="section__index">04</span>
         <h2>Formats and fidelity</h2>
       </div>
       <div class="table-scroll" data-reveal>
@@ -254,7 +315,7 @@
   <section class="section section--invert" id="privacy">
     <div class="wrap">
       <div class="section__head" data-reveal>
-        <span class="section__index">04</span>
+        <span class="section__index">05</span>
         <h2>What leaves your browser</h2>
       </div>
       <div class="grid">
@@ -308,7 +369,7 @@
   <section class="section">
     <div class="wrap">
       <div class="section__head" data-reveal>
-        <span class="section__index">05</span>
+        <span class="section__index">06</span>
         <h2>Optional: bring your own key</h2>
       </div>
       <div class="notice" data-reveal>
@@ -340,7 +401,7 @@
   <section class="section" id="limits-note">
     <div class="wrap">
       <div class="section__head" data-reveal>
-        <span class="section__index">06</span>
+        <span class="section__index">07</span>
         <h2>What it does not do</h2>
       </div>
       <p class="lede" style="margin-bottom:24px" data-reveal>
@@ -353,6 +414,7 @@
         <li>Diagrams drawn as vector paths are not extracted as images. Capturing them would require rasterizing the page, which defeats the purpose.</li>
         <li>OCR adds real time on scan-heavy PDFs. It only runs on pages that need it, but a fully scanned 100-page document still takes a while.</li>
         <li>Hand-written attach adapters exist for three sites. Everywhere else uses generic strategies that work on many sites but are not verified per site, and fall back to download plus clipboard.</li>
+        <li>Extracting a chat reads what the page has rendered. On a very long conversation, some sites keep only recent turns in the document, so scroll up to load the earlier ones first.</li>
         <li>There is no single guaranteed token-savings number. See the footnotes above.</li>
       </ul>
     </div>
@@ -362,7 +424,7 @@
   <section class="section" id="install">
     <div class="wrap">
       <div class="section__head" data-reveal>
-        <span class="section__index">07</span>
+        <span class="section__index">08</span>
         <h2>Get Feather</h2>
       </div>
       <div class="notice" data-reveal>
@@ -403,6 +465,7 @@
         <h4>Product</h4>
         <ul>
           <li><a href="#how">How it works</a></li>
+          <li><a href="#extract">Extract a conversation</a></li>
           <li><a href="#formats">Supported formats</a></li>
           <li><a href="#install">Get Feather</a></li>
         </ul>
