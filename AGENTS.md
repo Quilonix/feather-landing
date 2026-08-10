@@ -27,19 +27,48 @@ token-savings numbers instead of one flattering one. Keep that standard:
 - Keep the "what it does not do" section. Removing a known limitation from the
   page does not remove it from the product.
 
+## Distribution
+
+**The extension repository is private.** Nothing on this site may link to it,
+because every such link would 404 for visitors. `verify.mjs` fails the build if
+one appears.
+
+The Chrome Web Store is the only distribution channel. Until the listing is
+live, the call to action is an email address, not a download. Do not add a
+manual-install path, a zip link, or a "build from source" section.
+
+## Logo
+
+`assets/icon.svg` is the product icon exactly as it ships in the extension,
+kept unmodified so the store listing and this site cannot drift apart. It uses
+a violet-to-cyan gradient.
+
+`assets/logo.svg` and the inline marks in the pages are a **monochrome
+silhouette of the same feather**, set to `currentColor` so one asset serves both
+themes. Keep the geometry identical to the product icon. If the extension's icon
+changes shape, change both.
+
+The interior spine line from the product icon is intentionally omitted from the
+silhouette: it is white-on-white in the original and would either vanish or
+muddy the shape at 17px.
+
 ## Design constraints
 
 - **No CSS framework and no web fonts.** Both are deliberate. A privacy-first
   product should not make third-party requests on its own marketing page.
-- **No colour beyond ink and paper**, plus the two greys already defined as
-  custom properties. Adding a third colour turns a two-colour design into a
-  muddy one.
-- All colour lives in the custom properties at the top of `styles.css`. No
-  rule may hardcode a hex value.
+- **Two palettes, ink and paper, and nothing else.** Every colour token must be
+  defined in both the `:root` and the `html[data-theme="dark"]` block, or it
+  silently keeps its light value in dark mode. `verify.mjs` checks this.
+- No rule may hardcode a colour. All colour lives in the palette blocks.
+- Dark mode is keyed off `[data-theme]`, **not** an `@media` query, because a
+  media query cannot be overridden from script and the explicit Light and Dark
+  choices have to win. `theme-boot.js` sets the attribute before first paint so
+  there is no flash; keep it a classic script in `<head>`.
 - Square corners, hard offset blocks for depth, no border radius, no blur, no
   gradients on surfaces.
-- Respect `prefers-reduced-motion`. The ticker must stop for anyone who asks
-  for reduced motion.
+- Respect `prefers-reduced-motion`. The ticker must stop and the reveal
+  animation must not run. The reveal's hidden state is applied only from script,
+  so a visitor without JavaScript sees everything.
 
 ## Accessibility
 
@@ -49,6 +78,7 @@ token-savings numbers instead of one flattering one. Keep that standard:
   `h3`. Do not pick a heading level for its size.
 - Decorative text such as the site ticker's duplicate group stays
   `aria-hidden`.
+- Tap targets stay at least 44px on coarse pointers.
 
 ## Before pushing
 

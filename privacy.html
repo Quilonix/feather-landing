@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Privacy policy - Feather</title>
 <meta name="description" content="Feather's privacy policy. Documents are converted locally in your browser and never uploaded. Only anonymous, non-identifying usage counts are collected." />
-<meta name="color-scheme" content="light" />
 <link rel="canonical" href="https://quilonix.github.io/feather-landing/privacy.html" />
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+<script src="theme-boot.js"></script>
 <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -14,8 +15,10 @@
 
 <header class="masthead">
   <div class="wrap masthead__inner">
-    <a class="brand" href="./">
-      <span class="brand__mark" aria-hidden="true">F</span>
+    <a class="brand" href="./" aria-label="Feather home">
+      <span class="brand__mark" aria-hidden="true">
+        <svg viewBox="0 0 128 128" fill="currentColor"><path d="M40 88 C40 60, 55 32, 92 24 C88 48, 78 62, 40 88 Z"/><rect x="38" y="86" width="18" height="4" rx="2"/></svg>
+      </span>
       <span>Feather</span>
     </a>
     <div class="masthead__meta" aria-hidden="true">
@@ -23,8 +26,12 @@
       <span>Effective 2026-08-10</span>
     </div>
     <nav class="masthead__nav" aria-label="Primary">
-      <a class="masthead__link" href="./">Home</a>
-      <a class="masthead__link" href="https://github.com/Quilonix/feather">Source</a>
+      <div class="theme-switch" role="group" aria-label="Colour theme">
+        <button type="button" data-theme-set="auto" aria-pressed="true" title="Follow system theme">Auto</button>
+        <button type="button" data-theme-set="light" aria-pressed="false" title="Light theme">Light</button>
+        <button type="button" data-theme-set="dark" aria-pressed="false" title="Dark theme">Dark</button>
+      </div>
+      <a class="btn btn--sm btn--solid" href="./">Home</a>
     </nav>
   </div>
 </header>
@@ -253,7 +260,8 @@
           <ul>
             <li><strong>PostHog</strong> processes the anonymous events on our behalf. We use PostHog Cloud's EU region, so those events are ingested and stored in the European Union.</li>
             <li><strong>Groq</strong> and <strong>Google</strong> receive content only if you enable the optional pass with your own key, as your own API usage.</li>
-            <li><strong>GitHub</strong> hosts this website and the source code. If you visit either, GitHub processes standard request data such as your IP address for security and abuse prevention, under GitHub's privacy statement. We do not add analytics to this website.</li>
+            <li><strong>GitHub</strong> hosts this website. If you visit it, GitHub processes standard request data such as your IP address for security and abuse prevention, under GitHub's privacy statement. We do not add analytics to this website.</li>
+            <li><strong>Google</strong> distributes the extension through the Chrome Web Store. Installs, ratings and reviews are handled by Google under its own terms, and we receive only the aggregate figures the store shows any developer.</li>
           </ul>
           <p>
             We do not sell personal data, we do not share it with advertisers,
@@ -307,10 +315,10 @@
           <p>
             All network requests the extension makes use HTTPS. The extension
             ships no remotely-hosted code, which is both a Chrome requirement
-            and a deliberate choice: everything that runs is in the package and
-            can be reviewed in the public repository. Releases are published
-            with a SHA-256 checksum so you can verify the artifact you install
-            matches the one we built.
+            and a deliberate choice: everything that runs is inside the package
+            you install. The package distributed through the Chrome Web Store is
+            reviewed by Google and signed with a key held by the store, so the
+            copy Chrome installs is verifiably the copy we submitted.
           </p>
           <p>
             No system is perfectly secure. If you find a vulnerability, please
@@ -343,10 +351,9 @@
           <h2>15. Changes</h2>
           <p>
             If this policy changes, the effective date at the top of this page
-            changes with it, and the previous versions remain visible in the
-            public repository's history. If a change materially expands what we
-            collect, we will note it in the extension's release notes rather
-            than changing it quietly.
+            changes with it. If a change materially expands what we collect, we
+            will say so in the extension's release notes on the Chrome Web Store
+            rather than changing it quietly.
           </p>
         </section>
 
@@ -372,5 +379,6 @@
   </div>
 </footer>
 
+<script src="theme.js"></script>
 </body>
 </html>

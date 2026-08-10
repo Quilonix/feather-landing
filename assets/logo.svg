@@ -1,0 +1,13 @@
+<!-- Monochrome silhouette of the shipping product icon. Same feather geometry as
+     assets/icon.svg, with the gradient circle dropped and the shape set to
+     currentColor so it flips with the page theme instead of needing a second
+     asset or a filter.
+
+     The interior spine line from the product icon is omitted on purpose: in the
+     original it is white on white and only reads as a subtle crease, and in a
+     single-colour silhouette at 17px it would either disappear or muddy the
+     shape. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="currentColor" role="img" aria-label="Feather">
+  <path d="M40 88 C40 60, 55 32, 92 24 C88 48, 78 62, 40 88 Z" />
+  <rect x="38" y="86" width="18" height="4" rx="2" />
+</svg>

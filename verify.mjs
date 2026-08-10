@@ -60,20 +60,70 @@ for (const page of pages) {
   /<meta name="viewport"/.test(html) ? note(ok, `${page}: viewport set`) : note(fail, `${page}: no viewport`);
   /<title>/.test(html) ? note(ok, `${page}: title set`) : note(fail, `${page}: no title`);
   /<meta name="description"/.test(html) ? note(ok, `${page}: description set`) : note(fail, `${page}: no description`);
+
+  // 7. The extension repository is private, so linking to it would 404 for
+  // every visitor. Nothing on this site may point at it.
+  const privateLinks = [...html.matchAll(/https:\/\/github\.com\/Quilonix\/feather(?!-landing)[^"']*/g)].map((m) => m[0]);
+  privateLinks.length
+    ? note(fail, `${page}: links to the private extension repo: ${[...new Set(privateLinks)].join(", ")}`)
+    : note(ok, `${page}: no links to the private extension repo`);
+
+  // 8. Theme wiring: the boot script must be in <head> and run before the
+  // stylesheet, or the page paints in the wrong theme for a frame.
+  const bootIdx = html.indexOf("theme-boot.js");
+  const headEnd = html.indexOf("</head>");
+  bootIdx > -1 && bootIdx < headEnd
+    ? note(ok, `${page}: theme boot script is in head`)
+    : note(fail, `${page}: theme boot script missing or not in head`);
+  html.includes("theme.js") ? note(ok, `${page}: theme script loaded`) : note(fail, `${page}: theme.js not loaded`);
+  (html.match(/data-theme-set="(auto|light|dark)"/g) || []).length === 3
+    ? note(ok, `${page}: all three theme options present`)
+    : note(fail, `${page}: theme switch does not offer exactly three options`);
+  /<html lang="en" data-theme="/.test(html)
+    ? note(ok, `${page}: theme attribute present before script runs`)
+    : note(fail, `${page}: no default data-theme on <html>`);
 }
 
-// 7. The stylesheet must not hardcode colour outside the token block.
-const tokenBlockEnd = css.indexOf("}", css.indexOf(":root"));
-const afterTokens = css.slice(tokenBlockEnd);
-const strayHex = [...afterTokens.matchAll(/#[0-9a-fA-F]{3,8}\b/g)].map((m) => m[0]);
+// 7. Colour may only be declared inside a palette block (:root or a
+// [data-theme] block). Anything else means a rule hardcoded a colour and will
+// not flip with the theme. Comments are stripped first, since prose about a
+// colour is not a declaration of one.
+const cssRules = css.replace(/\/\*[\s\S]*?\*\//g, "");
+const paletteBlocks = [...cssRules.matchAll(/(?::root|html\[data-theme="[a-z]+"\])\s*\{([\s\S]*?)\n\}/g)].map((m) => m[1]);
+const paletteText = paletteBlocks.join("\n");
+const allHex = [...cssRules.matchAll(/#[0-9a-fA-F]{3,8}\b/g)].map((m) => m[0]);
+const paletteHex = new Set([...paletteText.matchAll(/#[0-9a-fA-F]{3,8}\b/g)].map((m) => m[0]));
+const strayHex = allHex.filter((h) => !paletteHex.has(h));
 strayHex.length
-  ? note(fail, `styles.css: hex colours outside :root: ${[...new Set(strayHex)].join(", ")}`)
-  : note(ok, "styles.css: no hex colour outside the token block");
+  ? note(fail, `styles.css: hex colours outside a palette block: ${[...new Set(strayHex)].join(", ")}`)
+  : note(ok, `styles.css: all ${paletteHex.size} colours live in palette blocks`);
 
-// 8. Reduced motion must be honoured, since the page animates a ticker.
+// Both palettes must define the same token names, or a token silently falls
+// back to the light value in dark mode.
+if (paletteBlocks.length >= 2) {
+  const names = paletteBlocks.map(
+    (b) => new Set([...b.matchAll(/(--[a-z-]+)\s*:/g)].map((m) => m[1]))
+  );
+  const lightOnly = [...names[0]].filter((n) => !names[1].has(n));
+  const darkOnly = [...names[1]].filter((n) => !names[0].has(n));
+  // Tokens that are intentionally light-only: geometry and fonts do not change
+  // between themes, only colour does.
+  const colourish = (n) => !/(--border-w|--offset|--gutter|--measure|--mono|--sans|--r-)/.test(n);
+  const missingInDark = lightOnly.filter(colourish);
+  missingInDark.length
+    ? note(fail, `styles.css: colour tokens missing from the dark palette: ${missingInDark.join(", ")}`)
+    : note(ok, "styles.css: every colour token is defined in both palettes");
+  darkOnly.length
+    ? note(fail, `styles.css: tokens only in the dark palette: ${darkOnly.join(", ")}`)
+    : note(ok, "styles.css: dark palette introduces no orphan tokens");
+} else {
+  note(fail, "styles.css: expected a light and a dark palette block");
+}
+
+// A page with a moving ticker and reveal animations must honour reduced motion.
 /prefers-reduced-motion/.test(css)
   ? note(ok, "styles.css: honours prefers-reduced-motion")
-  : note(fail, "styles.css: ticker animates with no reduced-motion guard");
+  : note(fail, "styles.css: animates with no reduced-motion guard");
 
 // 9. Braces balanced.
 (css.match(/\{/g) || []).length === (css.match(/\}/g) || []).length

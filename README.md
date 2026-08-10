@@ -10,7 +10,16 @@ Two pages, no build step, no dependencies:
 |---|---|
 | `index.html` | Landing page |
 | `privacy.html` | Privacy policy. This is the URL to put in the Chrome Web Store's Privacy Practices tab. |
-| `styles.css` | The whole design system |
+| `styles.css` | The whole design system, both palettes |
+| `theme-boot.js` | Sets the theme attribute before first paint. Classic script in `<head>` on purpose. |
+| `theme.js` | Theme switch (Auto / Light / Dark) and the scroll-reveal animation |
+| `assets/icon.svg` | The product icon exactly as it ships in the extension |
+| `assets/logo.svg` | Monochrome silhouette of the same feather, for this site |
+| `assets/favicon.svg` | Favicon |
+
+Distribution note: the extension repository is private, so nothing here links
+to it. The Chrome Web Store is the only channel, and until the listing is live
+the call to action is an email address.
 
 ## Run it
 

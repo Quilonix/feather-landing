@@ -1,0 +1,11 @@
+<!-- Favicon needs its own ground, because a tab strip is neither ink nor paper.
+     Uses the shipping product icon's feather geometry on a dark square so it
+     holds against both light and dark browser chrome, and matches the site's
+     two-colour treatment rather than the product icon's gradient. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <rect width="128" height="128" fill="#0d0d0d" />
+  <g fill="#ffffff">
+    <path d="M40 88 C40 60, 55 32, 92 24 C88 48, 78 62, 40 88 Z" />
+    <rect x="38" y="86" width="18" height="4" rx="2" />
+  </g>
+</svg>
