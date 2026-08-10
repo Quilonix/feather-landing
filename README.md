@@ -14,7 +14,9 @@ Two pages, no build step, no dependencies:
 | `theme-boot.js` | Sets the theme attribute before first paint. Classic script in `<head>` on purpose. |
 | `theme.js` | Theme switch (Auto / Light / Dark) and the scroll-reveal animation |
 | `assets/icon.svg` | The product icon exactly as it ships in the extension |
-| `assets/logo.svg` | Monochrome silhouette of the same feather, for this site |
+| `assets/logo.svg` | Monochrome silhouette of the same feather, used for the mark and the drifting feathers |
+| `assets/hero-eagle-light.webp` | Hero artwork, light theme |
+| `assets/hero-eagle-dark.webp` | Hero artwork, dark theme |
 | `assets/favicon.svg` | Favicon |
 
 Distribution note: the extension repository is private, so nothing here links

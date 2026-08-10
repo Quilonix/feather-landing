@@ -54,32 +54,57 @@
 <main id="main">
 
   <!-- ── Hero ────────────────────────────────────────────────────────────── -->
-  <section class="hero">
-    <div class="hero__inner">
-      <div class="hero__main">
-        <span class="hero__eyebrow">A free Chrome extension</span>
-        <h1>Documents in.<br />Markdown out.<br /><em>Nothing leaves</em><br />your browser.</h1>
-        <p class="hero__sub">
-          Feather converts PDF, Word, Excel and PowerPoint into clean Markdown
-          and drops it straight into your AI chat's message box. It also lifts
-          an entire conversation back out again, so you can carry it to a
-          different model. All of it runs locally in the page. There is no
-          server to send your documents to.
-        </p>
-        <div class="hero__actions">
-          <a class="btn btn--solid" href="#install">Get Feather</a>
-          <a class="btn" href="#how">See how it works</a>
-        </div>
-        <p class="hero__note">
-          No account. No API key. No per-user cost. Works on 21 AI chat sites.
-        </p>
-      </div>
+  <!-- A permanently dark, full-bleed band. It does not invert with the page
+       theme: the treatment depends on stipple-on-black, and a light version
+       would be a different design rather than the same one recoloured. -->
+  <section class="cine" aria-labelledby="hero-title">
+    <div class="cine__art" aria-hidden="true"></div>
 
-      <aside class="hero__spec" aria-label="Specifications">
+    <!-- Decorative sky layer: feathers shedding and drifting down past the title.
+         Purely atmosphere, so it is hidden from assistive technology and
+         disabled under reduced-motion. The shapes are CSS masks rather than
+         images, so they take the theme's ink colour. -->
+    <div class="sky" aria-hidden="true">
+      <div class="fall fall--1"><span class="fall__sway"></span></div>
+      <div class="fall fall--2"><span class="fall__sway"></span></div>
+      <div class="fall fall--3"><span class="fall__sway"></span></div>
+      <div class="fall fall--4"><span class="fall__sway"></span></div>
+    </div>
+
+    <p class="cine__meta cine__meta--tl">Feather</p>
+    <p class="cine__meta cine__meta--tr">documents to markdown<br />without the upload</p>
+
+    <div class="cine__body">
+      <p class="cine__eyebrow">A free Chrome extension</p>
+      <h1 class="cine__title" id="hero-title">
+        <span class="cine__line">Documents in.</span>
+        <span class="cine__line">Markdown out.</span>
+      </h1>
+      <p class="cine__sub">
+        Feather converts PDF, Word, Excel and PowerPoint into clean Markdown and
+        drops it straight into your AI chat. It also lifts an entire conversation
+        back out again, so you can carry it to a different model. All of it runs
+        locally in the page. Nothing is uploaded.
+      </p>
+      <div class="cine__actions">
+        <a class="btn btn--invert" href="#install">Get Feather</a>
+        <a class="btn btn--onDark" href="#how">See how it works</a>
+      </div>
+    </div>
+
+    <a class="cine__scroll" href="#glance">
+      <span>Scroll to explore</span>
+      <span class="cine__arrow" aria-hidden="true">&#8595;</span>
+    </a>
+    <p class="cine__meta cine__meta--br">runs local / no account / free</p>
+  </section>
+
+  <!-- ── At a glance ─────────────────────────────────────────────────────── -->
+  <section class="section section--tight" id="glance">
+    <div class="wrap">
+      <div class="glance">
         <p class="spec__title">At a glance</p>
-        <dl>
-          <div class="spec__row"><dt>Part</dt><dd>Feather</dd></div>
-          <div class="spec__row"><dt>Revision</dt><dd>2026.8.10</dd></div>
+        <dl class="glance__grid">
           <div class="spec__row"><dt>Platform</dt><dd>Chrome / MV3</dd></div>
           <div class="spec__row"><dt>Input formats</dt><dd>10</dd></div>
           <div class="spec__row"><dt>Supported sites</dt><dd>21</dd></div>
@@ -89,8 +114,9 @@
           <div class="spec__row"><dt>Batch limit</dt><dd>5 files</dd></div>
           <div class="spec__row"><dt>Max file size</dt><dd>40 MB</dd></div>
           <div class="spec__row"><dt>Price</dt><dd>Free</dd></div>
+          <div class="spec__row"><dt>Revision</dt><dd>2026.8.10</dd></div>
         </dl>
-      </aside>
+      </div>
     </div>
   </section>
 

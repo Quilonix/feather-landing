@@ -37,7 +37,7 @@ The Chrome Web Store is the only distribution channel. Until the listing is
 live, the call to action is an email address, not a download. Do not add a
 manual-install path, a zip link, or a "build from source" section.
 
-## Logo
+## Logo and artwork
 
 `assets/icon.svg` is the product icon exactly as it ships in the extension,
 kept unmodified so the store listing and this site cannot drift apart. It uses
@@ -48,9 +48,20 @@ silhouette of the same feather**, set to `currentColor` so one asset serves both
 themes. Keep the geometry identical to the product icon. If the extension's icon
 changes shape, change both.
 
-The interior spine line from the product icon is intentionally omitted from the
-silhouette: it is white-on-white in the original and would either vanish or
-muddy the shape at 17px.
+The hero artwork is two files, one per theme. Only the matching one is ever
+downloaded, because a `background-image` on a selector that does not match is
+never fetched. Do not switch this to an `<img>`: an image cannot be recoloured
+or swapped by theme without shipping both to every visitor.
+
+**Images must be compressed before they are committed.** The hero originals were
+a 1.9 MB and a 4.1 MB PNG, which is self-defeating on a page whose argument is
+that it is light. They are WebP at 157 KB and 422 KB. Stipple and dither art is
+the worst case for PNG, since every dot is high-frequency detail the palette
+optimiser cannot help with.
+
+The drifting feathers in the hero are CSS masks over `logo.svg`, not `<img>`
+elements, for the same colour reason: `currentColor` has no value inside an
+`<img>`, so it would resolve to black and vanish on the dark theme.
 
 ## Design constraints
 

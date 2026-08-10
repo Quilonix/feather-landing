@@ -27,6 +27,17 @@
    ========================================================================= */
 
 :root {
+  /* Cinematic hero band. Theme-aware: the stipple, the title scanlines and the
+     falling feathers all take their colour from these. --cine-scan matches the
+     band background on purpose, so the scanlines read as gaps. */
+  --cine-bg: #f2efe9;
+  --cine-ink: #14130f;
+  --cine-ink-2: #46433b;
+  --cine-faint: #8a8479;
+  --cine-rule: #dcd6cc;
+  --cine-scan: #f2efe9;
+  --cine-hover: rgba(20, 19, 15, 0.06);
+
   /* Paper is a warm off-white rather than #fff: pure white next to a serif at
      large sizes glares, and the warmth is what makes the page read as printed
      rather than as a screen. */
@@ -82,6 +93,14 @@
    noticeably stronger shadows, because a soft shadow on a dark surface is
    almost invisible. */
 html[data-theme="dark"] {
+  --cine-bg: #080806;
+  --cine-ink: #f3f1ea;
+  --cine-ink-2: #b8b3a8;
+  --cine-faint: #6e6a62;
+  --cine-rule: #2a2823;
+  --cine-scan: #0f0e0c;
+  --cine-hover: rgba(243, 241, 234, 0.07);
+
   --paper: #14140f;
   --paper-raised: #1b1a15;
   --paper-sunken: #100f0c;
@@ -362,96 +381,240 @@ a { color: inherit; }
 
 .btn--sm { padding: 9px 16px; font-size: 13.5px; }
 
-/* ── Hero ─────────────────────────────────────────────────────────────────── */
+/* ── Cinematic hero ───────────────────────────────────────────────────────── */
 
-.hero { padding: clamp(56px, 11vw, 132px) 0 clamp(44px, 7vw, 84px); }
+/* A permanently dark, full-bleed band. It deliberately does NOT invert with the
+   page theme: the whole treatment is stipple-on-black, and a light version would
+   be a different design rather than the same one recoloured. The tokens below
+   are therefore identical in both palettes.
 
-.hero__inner {
-  display: grid;
-  gap: clamp(40px, 6vw, 72px);
-  grid-template-columns: 1fr;
-  align-items: start;
-  width: 100%;
-  max-width: 1140px;
-  margin: 0 auto;
-  padding-inline: var(--gutter);
-}
-
-@media (min-width: 1000px) {
-  .hero__inner { grid-template-columns: 1.5fr 0.85fr; gap: clamp(48px, 5vw, 88px); }
-}
-
-/* min-width: 0 stops long unbroken strings from blowing the grid column out
-   past its track, which is the usual cause of a hero that scrolls sideways on
-   a phone. Padding lives on .hero__inner, not here. */
-.hero__main { min-width: 0; }
-
-.hero__eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 9px;
-  font-size: 11.5px;
-  font-weight: 500;
-  letter-spacing: 0.13em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 26px;
-}
-
-/* A hairline before the eyebrow, the way a journal marks a standfirst. */
-.hero__eyebrow::before {
-  content: "";
-  width: 30px;
-  height: 1px;
-  background: var(--rule-strong);
-}
-
-h1 {
-  font-family: var(--serif);
-  font-size: clamp(40px, 6.6vw, 78px);
-  line-height: 1.02;
-  letter-spacing: -0.028em;
-  font-weight: 500;
-  text-wrap: balance;
-}
-
-/* Emphasis by italic and a hairline underline rather than a reversed block. */
-h1 em {
-  font-style: italic;
+   Layout is corner-anchored: meta labels pinned to the four corners, the title
+   sitting low-left, the art bleeding off the right. That asymmetry is what makes
+   it read as a title card rather than a centred hero. */
+.cine {
   position: relative;
-  white-space: nowrap;
+  isolation: isolate;
+  overflow: hidden;
+  background: var(--cine-bg);
+  color: var(--cine-ink);
+  min-height: min(92vh, 880px);
+  display: flex;
+  align-items: flex-end;
+  padding: clamp(84px, 12vh, 132px) var(--gutter) clamp(72px, 10vh, 104px);
 }
 
-.hero__sub {
-  margin-top: 28px;
-  max-width: 52ch;
-  font-size: clamp(16.5px, 1.5vw, 19px);
-  line-height: 1.62;
-  color: var(--ink-2);
+/* Stippled feather, bleeding off the top right. Pointer-events off and
+   aria-hidden, since it carries no information the copy does not. */
+/* Hero artwork: a stippled eagle with a feather falling from it, which is the
+   product's name told as a picture. Two files, one per theme, swapped by the
+   attribute. Only the matching one is fetched, since a background-image on a
+   non-matching selector is never requested.
+
+   Originals were 1.9 MB and 4.1 MB PNGs. Stipple art is the worst case for PNG
+   because every dot is high-frequency detail, so they are served as WebP at
+   157 KB and 422 KB instead. */
+.cine__art {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background-image: url("assets/hero-eagle-light.webp");
+  background-repeat: no-repeat;
+  background-position: 76% 42%;
+  background-size: min(150%, 1400px) auto;
+  /* Fades the art out across the left half so the title never competes with the
+     grain for contrast. The mask colour is irrelevant, only its alpha. */
+  -webkit-mask-image: linear-gradient(100deg, transparent 2%, currentColor 46%, currentColor 100%);
+  mask-image: linear-gradient(100deg, transparent 2%, currentColor 46%, currentColor 100%);
+  opacity: 0.72;
 }
 
-.hero__actions {
-  margin-top: 36px;
+html[data-theme="dark"] .cine__art {
+  background-image: url("assets/hero-eagle-dark.webp");
+  opacity: 0.9;
+}
+
+@media (max-width: 900px) {
+  /* On a phone the art moves above the title rather than behind it, so neither
+     has to lose contrast to the other. */
+  .cine__art {
+    background-position: 62% 8%;
+    background-size: 170% auto;
+    -webkit-mask-image: linear-gradient(to bottom, currentColor 0%, currentColor 42%, transparent 74%);
+    mask-image: linear-gradient(to bottom, currentColor 0%, currentColor 42%, transparent 74%);
+    opacity: 0.5;
+  }
+  html[data-theme="dark"] .cine__art { opacity: 0.66; }
+}
+
+.cine__meta {
+  position: absolute;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  line-height: 1.7;
+  color: var(--cine-faint);
+  margin: 0;
+}
+
+.cine__meta--tl {
+  top: clamp(26px, 4vh, 40px);
+  left: var(--gutter);
+  letter-spacing: 0.34em;
+  font-size: 12px;
+  color: var(--cine-ink);
+}
+
+.cine__meta--tr {
+  top: clamp(26px, 4vh, 40px);
+  right: var(--gutter);
+  text-align: right;
+}
+
+.cine__meta--br {
+  bottom: clamp(26px, 4vh, 40px);
+  right: var(--gutter);
+  text-align: right;
+}
+
+@media (max-width: 720px) {
+  .cine__meta--tr, .cine__meta--br { display: none; }
+}
+
+.cine__body { position: relative; max-width: 62ch; }
+
+.cine__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--cine-faint);
+  margin-bottom: clamp(18px, 3vh, 30px);
+}
+
+.cine__eyebrow::before {
+  content: "";
+  width: 26px;
+  height: 1px;
+  background: var(--cine-rule);
+}
+
+/* Oversized, tight, uppercase. The sans is used here rather than the serif:
+   at this scale the grotesque is what gives the title card its weight. */
+.cine__title {
+  font-family: var(--sans);
+  font-size: clamp(44px, 11.5vw, 148px);
+  line-height: 0.86;
+  letter-spacing: -0.045em;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.cine__line { display: block; }
+
+/* Horizontal scanlines cut through the letterforms, the way a title card sits
+   under a CRT. Applied with background-clip so it is one element, not a stack,
+   and guarded by @supports so an unsupporting browser gets solid type rather
+   than invisible type. */
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .cine__title {
+    background-image: repeating-linear-gradient(
+      to bottom,
+      var(--cine-ink) 0 3px,
+      var(--cine-scan) 3px 5px
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
+
+.cine__sub {
+  margin-top: clamp(22px, 3.4vh, 34px);
+  max-width: 54ch;
+  font-size: clamp(15.5px, 1.4vw, 18px);
+  line-height: 1.66;
+  color: var(--cine-ink-2);
+}
+
+.cine__actions {
+  margin-top: clamp(26px, 4vh, 38px);
   display: flex;
   flex-wrap: wrap;
-  gap: 14px;
+  gap: 13px;
+}
+
+/* Scroll cue, bottom left, matching the reference's placement. */
+.cine__scroll {
+  position: absolute;
+  bottom: clamp(26px, 4vh, 40px);
+  left: var(--gutter);
+  display: inline-flex;
   align-items: center;
+  gap: 11px;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--cine-faint);
+  text-decoration: none;
+  transition: color 200ms ease;
 }
 
-.hero__note {
-  margin-top: 22px;
-  font-size: 13.5px;
-  color: var(--muted);
+.cine__scroll:hover { color: var(--cine-ink); }
+
+.cine__arrow { animation: nudge 2.4s ease-in-out infinite; }
+
+@keyframes nudge {
+  0%, 100% { transform: translateY(0); opacity: 0.55; }
+  50% { transform: translateY(4px); opacity: 1; }
 }
 
-/* Spec panel: a quiet definition list, not a boxed sidebar. */
-.hero__spec {
-  padding: 26px 28px;
-  background: var(--paper-raised);
-  border: 1px solid var(--rule);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--lift-2);
+/* The scroll cue and the bottom-right meta would collide with the title on a
+   short viewport, so they step out of the way. */
+@media (max-height: 620px) {
+  .cine { min-height: 0; }
+  .cine__scroll { display: none; }
 }
+
+@media (max-width: 720px) {
+  .cine {
+    min-height: min(88vh, 720px);
+    padding-top: clamp(96px, 16vh, 140px);
+  }
+  .cine__art {
+    top: 26%;
+    right: -22%;
+    width: 118vw;
+    transform: none;
+    opacity: 0.55;
+  }
+}
+
+/* Buttons on the permanent dark band need their own pair, since the themed
+   ones would be invisible in light mode. */
+.btn--invert {
+  background: var(--cine-ink);
+  border-color: var(--cine-ink);
+  color: var(--cine-bg);
+  box-shadow: none;
+}
+.btn--invert:hover { background: var(--cine-ink-2); border-color: var(--cine-ink-2); }
+
+.btn--onDark {
+  background: transparent;
+  border-color: var(--cine-rule);
+  color: var(--cine-ink);
+  box-shadow: none;
+}
+.btn--onDark:hover { background: var(--cine-hover); border-color: var(--cine-faint); transform: translateY(-1px); }
+
+/* ── At a glance ──────────────────────────────────────────────────────────── */
 
 .spec__title {
   font-size: 11.5px;
@@ -460,7 +623,6 @@ h1 em {
   text-transform: uppercase;
   color: var(--muted);
   padding-bottom: 14px;
-  margin-bottom: 6px;
   border-bottom: 1px solid var(--rule);
 }
 
@@ -469,11 +631,11 @@ h1 em {
   justify-content: space-between;
   align-items: baseline;
   gap: 16px;
-  padding: 9px 0;
-  font-size: 14px;
+  padding: 11px 0;
+  font-size: 14.5px;
+  border-bottom: 1px solid var(--rule);
 }
 
-.spec__row + .spec__row { border-top: 1px solid var(--rule); }
 .spec__row dt { color: var(--muted); }
 .spec__row dd {
   font-weight: 500;
@@ -481,6 +643,27 @@ h1 em {
   font-variant-numeric: tabular-nums;
   color: var(--ink);
 }
+
+/* The last row in each column would otherwise leave a dangling rule. */
+.glance__grid .spec__row:last-child { border-bottom: 0; }
+
+.glance {
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-lg);
+  background: var(--paper-raised);
+  padding: 26px 28px;
+  box-shadow: var(--lift-1);
+}
+
+.glance__grid {
+  display: grid;
+  gap: 0 clamp(24px, 5vw, 64px);
+  grid-template-columns: 1fr;
+  margin-top: 6px;
+}
+
+@media (min-width: 700px) { .glance__grid { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 1040px) { .glance__grid { grid-template-columns: repeat(3, 1fr); } }
 
 /* ── Ticker ───────────────────────────────────────────────────────────────── */
 
@@ -1065,4 +1248,79 @@ html[data-motion="on"] [data-reveal][data-delay="4"] { transition-delay: 360ms; 
   .masthead, .ticker, .footer__grid, .theme-switch { display: none; }
   .card, .notice, .hero__spec { box-shadow: none; }
   a { text-decoration: none; }
+}
+
+
+/* ── Sky: soaring eagle and shed feathers ─────────────────────────────────── */
+
+/* The product is called Feather, so the hero tells that story: feathers shed
+   from above the frame and drift down past the title.
+
+   Only transform and opacity are animated, so this stays on the compositor and
+   costs no layout work. The entire layer is decorative and aria-hidden. */
+.sky {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+
+
+
+
+/* A shed feather. Outer element owns the descent, inner owns the pendulum sway
+   and tumble, for the same reason as the eagle: a falling feather is two motions
+   at different periods. */
+.fall {
+  position: absolute;
+  top: -8%;
+  width: clamp(20px, 2.4vw, 34px);
+  opacity: 0;
+  animation: descend 19s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+}
+
+.fall__sway {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  background-color: var(--cine-ink);
+  -webkit-mask: url("assets/logo.svg") center / contain no-repeat;
+  mask: url("assets/logo.svg") center / contain no-repeat;
+  animation: sway 4.6s ease-in-out infinite alternate;
+}
+
+@keyframes descend {
+  0% { transform: translateY(0); opacity: 0; }
+  6% { opacity: 0.44; }
+  82% { opacity: 0.3; }
+  100% { transform: translateY(114vh); opacity: 0; }
+}
+
+@keyframes sway {
+  from { transform: translateX(-30px) rotate(-24deg); }
+  to { transform: translateX(30px) rotate(26deg); }
+}
+
+/* Staggered and spread across the frame so feathers drift past at intervals
+   rather than all at once. */
+.fall--1 { left: 24%; animation-delay: 5s; }
+.fall--2 { left: 47%; animation-delay: 14s; width: clamp(15px, 1.7vw, 24px); }
+.fall--2 .fall__sway { animation-duration: 3.6s; }
+.fall--3 { left: 68%; animation-delay: 25s; }
+.fall--3 .fall__sway { animation-duration: 5.4s; }
+.fall--4 { left: 12%; animation-delay: 34s; width: clamp(13px, 1.5vw, 20px); }
+.fall--4 .fall__sway { animation-duration: 6.2s; }
+
+/* Ambient motion is exactly what reduced-motion exists for. The global rule
+   collapses the durations, but the feathers are hidden outright rather than
+   left as four marks frozen mid-air, and the eagle is parked mid-crossing. */
+@media (prefers-reduced-motion: reduce) {
+  .fall { display: none; }
+  .cine__arrow { animation: none; }
+}
+
+@media (max-width: 720px) {
+  .fall--2, .fall--4 { display: none; }
 }
