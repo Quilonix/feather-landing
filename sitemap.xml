@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Two pages, so this is hand-maintained rather than generated. If a page is
+  added, add it here: Search Console reports a sitemap that omits a page as
+  "discovered but not submitted", which delays indexing.
+
+  lastmod must be a real date. An always-current lastmod trains crawlers to
+  ignore the field, so it is updated only when the page actually changes.
+
+  If a custom domain is added, update these URLs and the canonical tags in both
+  pages in the same change, or the two will disagree and Search Console will
+  report a canonical mismatch.
+
+  URLs include the .html extension because that is the path that exists on
+  disk. Extensionless URLs are a host feature, not a file, so a sitemap that
+  claims them breaks the moment the site is served from anywhere that does not
+  rewrite them. 404.html is deliberately absent: it is noindex and has no
+  address of its own.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://feather.quilonix.in/</loc>
+    <lastmod>2026-08-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://feather.quilonix.in/privacy.html</loc>
+    <lastmod>2026-08-11</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+</urlset>

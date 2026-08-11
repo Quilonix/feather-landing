@@ -4,12 +4,13 @@ Landing page and privacy policy for [Feather](https://github.com/Quilonix/feathe
 a Chrome extension that converts documents into Markdown entirely in the
 browser.
 
-Two pages, no build step, no dependencies:
+Two pages plus an error page, no build step, no dependencies:
 
 | File | Purpose |
 |---|---|
 | `index.html` | Landing page |
 | `privacy.html` | Privacy policy. This is the URL to put in the Chrome Web Store's Privacy Practices tab. |
+| `404.html` | Error page. Served automatically by GitHub Pages and Vercel. Uses root-absolute paths, because it is served at whatever address the visitor mistyped. |
 | `styles.css` | The whole design system, both palettes |
 | `theme-boot.js` | Sets the theme attribute before first paint. Classic script in `<head>` on purpose. |
 | `theme.js` | Theme switch (Auto / Light / Dark) and the scroll-reveal animation |
@@ -17,7 +18,14 @@ Two pages, no build step, no dependencies:
 | `assets/logo.svg` | Monochrome silhouette of the same feather, used for the mark and the drifting feathers |
 | `assets/hero-eagle-light.webp` | Hero artwork, light theme |
 | `assets/hero-eagle-dark.webp` | Hero artwork, dark theme |
+| `assets/og.png` | Share card, 1200x630, referenced by `og:image` on both pages |
 | `assets/favicon.svg` | Favicon |
+
+Internal links name the file, extension included: `privacy.html`, not `/privacy`.
+An extensionless URL is a host rewrite rather than a file, so linking to one
+breaks on a plain file server, on a local copy, and on any host that does not
+rewrite. `vercel.json` redirects `/privacy` and `/privacy-policy` to the file so
+any address already published keeps working.
 
 Distribution note: the extension repository is private, so nothing here links
 to it. The Chrome Web Store is the only channel, and until the listing is live
@@ -61,9 +69,15 @@ theme. No rule hardcodes a colour, including shadows.
 Two scripts, no dependencies, run them before pushing:
 
 ```bash
-node verify.mjs          # links, anchors, undefined CSS classes, a11y basics, conventions
+node verify.mjs          # links, anchors, dead CSS, sitemap agreement, a11y basics, conventions
 node verify-policy.mjs   # privacy.html vs the extension's actual code
 ```
+
+`verify.mjs` covers all three pages. Beyond the obvious, it checks both
+directions of the class contract (no class without a rule, no rule without a
+class), that fragment links into another page hit an id that exists there, that
+every sitemap URL resolves to a file and is some page's canonical, and that the
+error page is `noindex` with no canonical of its own.
 
 `verify-policy.mjs` is the important one. The privacy policy is a legal
 declaration and it is the URL the Chrome Web Store listing points at, so it
@@ -79,6 +93,13 @@ sibling directory and skips cleanly if it is not there.
 
 Static hosting, anywhere. For GitHub Pages, enable Pages on the `main` branch
 at the repository root. `.nojekyll` is present so files are served as-is.
+Both GitHub Pages and Vercel serve `404.html` for an unknown path with no
+configuration.
+
+`vercel.json` sets `cleanUrls: false` on purpose. With it on, Vercel serves
+`privacy.html` at `/privacy` and redirects the `.html` path away, which makes
+the deployed URLs disagree with the files in the repository and with a local
+copy. Redirects cover the extensionless addresses instead.
 
 The privacy policy must stay reachable at a stable URL, because the Chrome
 Web Store listing points at it. Do not rename `privacy.html` without updating

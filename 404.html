@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Page not found - Feather</title>
+<meta name="description" content="That page does not exist on feather.quilonix.in. Links to the landing page and the privacy policy." />
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+
+<!-- An error page is served at whatever path the visitor asked for, so every
+     path here is root-absolute. A relative href on /docs/old-page would
+     resolve against /docs/ and the page would arrive unstyled. -->
+<script src="/theme-boot.js"></script>
+
+<!-- No canonical and no structured data: this page has no single address, and
+     an error page that claims one teaches Search Console to index it. Follow
+     is kept so the links below are still crawled. -->
+<meta name="robots" content="noindex, follow" />
+<meta name="theme-color" content="#fbfaf8" media="(prefers-color-scheme: light)" />
+<meta name="theme-color" content="#14140f" media="(prefers-color-scheme: dark)" />
+<meta name="author" content="Quilonix" />
+<link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+<a class="skip" href="#doc">Skip to content</a>
+
+<header class="masthead">
+  <div class="wrap masthead__inner">
+    <a class="brand" href="/" aria-label="Feather home">
+      <span class="brand__mark" aria-hidden="true">
+        <svg viewBox="0 0 128 128" fill="currentColor"><path d="M40 88 C40 60, 55 32, 92 24 C88 48, 78 62, 40 88 Z"/><rect x="38" y="86" width="18" height="4" rx="2"/></svg>
+      </span>
+      <span>Feather</span>
+    </a>
+    <div class="masthead__meta" aria-hidden="true">
+      <span>Error 404</span>
+      <span>Page not found</span>
+    </div>
+    <nav class="masthead__nav" aria-label="Primary">
+      <div class="theme-switch" role="group" aria-label="Colour theme">
+        <button type="button" data-theme-set="auto" aria-pressed="true" title="Follow system theme">Auto</button>
+        <button type="button" data-theme-set="light" aria-pressed="false" title="Light theme">Light</button>
+        <button type="button" data-theme-set="dark" aria-pressed="false" title="Dark theme">Dark</button>
+      </div>
+      <a class="btn btn--sm btn--solid" href="/">Home</a>
+    </nav>
+  </div>
+</header>
+
+<main class="doc" id="doc">
+  <div class="wrap">
+
+    <div class="doc__head">
+      <h1>Page not found</h1>
+      <div class="doc__meta">
+        <span class="mono">404</span>
+        <span>The address is wrong, or the page has moved</span>
+      </div>
+    </div>
+
+    <div class="prose">
+      <section>
+        <p>
+          Nothing lives at that address. The site is two pages, so whichever one
+          you wanted is almost certainly below.
+        </p>
+      </section>
+
+      <section>
+        <h2>Where to go instead</h2>
+        <ul>
+          <li><a href="/">The landing page</a>, which covers what Feather does, the formats it handles, and how to get it.</li>
+          <li><a href="/privacy.html">The privacy policy</a>, which is the page the Chrome Web Store listing points at.</li>
+          <li><a href="/index.html#formats">Formats and fidelity</a>, for what each converter actually does.</li>
+          <li><a href="/index.html#install">Get Feather</a>, for the current release status.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>If a link on this site sent you here</h2>
+        <p>
+          That is a bug on our side rather than a mistake on yours, and we would
+          like to know about it. Email
+          <a href="mailto:contact@quilonix.in?subject=Broken%20link%20on%20feather.quilonix.in">contact@quilonix.in</a>
+          with the address you came from.
+        </p>
+      </section>
+    </div>
+
+    <!-- Outside .prose on purpose: .prose a underlines and re-colours every
+         link it contains, which would erase a solid button's label. -->
+    <div style="margin-top:44px;display:flex;flex-wrap:wrap;gap:12px">
+      <a class="btn btn--solid" href="/">Back to the landing page</a>
+      <a class="btn btn--ghost" href="/privacy.html">Privacy policy</a>
+    </div>
+
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer__base">
+      <span>Feather by Quilonix. All rights reserved.</span>
+      <span>Static page. No trackers, no web fonts, no cookies.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="/theme.js"></script>
+</body>
+</html>

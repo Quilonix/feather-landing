@@ -1,0 +1,18 @@
+# Feather landing page
+#
+# Everything here is public marketing copy and a privacy policy, so there is
+# nothing to keep out of an index. The only disallow is the verification
+# scripts, which are dev tooling rather than content.
+#
+# 404.html is not disallowed on purpose: it carries a noindex tag, and a
+# crawler has to be allowed to fetch a page before it can read that tag.
+
+User-agent: *
+Allow: /
+Disallow: /verify.mjs
+Disallow: /verify-policy.mjs
+
+# Crawl-delay is deliberately omitted: the site is a handful of static files,
+# so there is no load to protect, and Google ignores the directive anyway.
+
+Sitemap: https://feather.quilonix.in/sitemap.xml

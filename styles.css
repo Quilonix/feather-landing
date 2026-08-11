@@ -207,8 +207,6 @@ a { color: inherit; }
   color: var(--muted);
 }
 
-.num { font-variant-numeric: tabular-nums; }
-
 /* ── Masthead ─────────────────────────────────────────────────────────────── */
 
 .masthead {
@@ -392,6 +390,9 @@ a { color: inherit; }
    sitting low-left, the art bleeding off the right. That asymmetry is what makes
    it read as a title card rather than a centred hero. */
 .cine {
+  /* Gutter on narrow screens, container offset once the viewport exceeds the
+     container width, so the hero aligns with every section below it. */
+  --edge: max(var(--gutter), calc((100% - 1140px) / 2));
   position: relative;
   isolation: isolate;
   overflow: hidden;
@@ -400,7 +401,7 @@ a { color: inherit; }
   min-height: min(92vh, 880px);
   display: flex;
   align-items: flex-end;
-  padding: clamp(84px, 12vh, 132px) var(--gutter) clamp(72px, 10vh, 104px);
+  padding: clamp(84px, 12vh, 132px) var(--edge) clamp(72px, 10vh, 104px);
 }
 
 /* Stippled feather, bleeding off the top right. Pointer-events off and
@@ -460,7 +461,7 @@ html[data-theme="dark"] .cine__art {
 
 .cine__meta--tl {
   top: clamp(26px, 4vh, 40px);
-  left: var(--gutter);
+  left: var(--edge);
   letter-spacing: 0.34em;
   font-size: 12px;
   color: var(--cine-ink);
@@ -468,13 +469,13 @@ html[data-theme="dark"] .cine__art {
 
 .cine__meta--tr {
   top: clamp(26px, 4vh, 40px);
-  right: var(--gutter);
+  right: var(--edge);
   text-align: right;
 }
 
 .cine__meta--br {
   bottom: clamp(26px, 4vh, 40px);
-  right: var(--gutter);
+  right: var(--edge);
   text-align: right;
 }
 
@@ -553,7 +554,7 @@ html[data-theme="dark"] .cine__art {
 .cine__scroll {
   position: absolute;
   bottom: clamp(26px, 4vh, 40px);
-  left: var(--gutter);
+  left: var(--edge);
   display: inline-flex;
   align-items: center;
   gap: 11px;
@@ -826,7 +827,6 @@ h3 {
 }
 
 .card p { font-size: 15px; line-height: 1.62; color: var(--ink-2); }
-.card--flat { box-shadow: none; }
 
 /* ── Tables ───────────────────────────────────────────────────────────────── */
 
@@ -994,7 +994,6 @@ td.mono, th.mono { font-family: var(--mono); font-size: 13.5px; color: var(--ink
   background: var(--rule-strong);
 }
 
-.list--check li::before,
 .list--cross li::before {
   content: "";
   top: 0.55em;
@@ -1003,8 +1002,6 @@ td.mono, th.mono { font-family: var(--mono); font-size: 13.5px; color: var(--ink
   border-radius: 50%;
   background: var(--faint);
 }
-
-.list--check li::before { background: var(--ink); }
 
 /* ── Footnotes ────────────────────────────────────────────────────────────── */
 
@@ -1211,10 +1208,6 @@ html[data-motion="on"] [data-reveal][data-delay="4"] { transition-delay: 360ms; 
   .masthead__inner { min-height: 58px; }
   .brand { font-size: 18px; }
 
-  .hero { padding-top: 44px; }
-  .hero__actions .btn { width: 100%; }
-  .hero__spec { padding: 22px; }
-
   .step { grid-template-columns: 40px 1fr; padding: 22px 0; }
   .card { padding: 22px; }
   .notice__tag, .notice__body { padding: 22px; }
@@ -1246,7 +1239,7 @@ html[data-motion="on"] [data-reveal][data-delay="4"] { transition-delay: 360ms; 
 
 @media print {
   .masthead, .ticker, .footer__grid, .theme-switch { display: none; }
-  .card, .notice, .hero__spec { box-shadow: none; }
+  .card, .notice { box-shadow: none; }
   a { text-decoration: none; }
 }
 
@@ -1323,4 +1316,112 @@ html[data-motion="on"] [data-reveal][data-delay="4"] { transition-delay: 360ms; 
 
 @media (max-width: 720px) {
   .fall--2, .fall--4 { display: none; }
+}
+
+
+/* ── Resolution coverage ──────────────────────────────────────────────────────
+   The layout is fluid between breakpoints, so these handle the ends of the
+   range rather than every device in it: very large displays, very small ones,
+   and viewports that are short rather than narrow. Tested by resizing rather
+   than by device name, since device names go stale and viewport sizes do not.
+   ========================================================================= */
+
+/* Long unbroken strings (a URL in prose, a long compound word) are the usual
+   cause of horizontal scroll on a 320px screen. */
+body { overflow-wrap: break-word; }
+
+/* Nothing may exceed the viewport width. A stray wide child on a phone produces
+   a page that scrolls sideways, which is worse than any layout compromise. */
+html, body { max-width: 100%; overflow-x: hidden; }
+
+/* ── Very large displays: 1600px and up ───────────────────────────────────── */
+/* The container stays at 1140px on purpose, because an editorial measure should
+   not grow without limit, but type and rhythm can afford to scale up so the page
+   does not look like a small layout stranded in the middle of a big screen. */
+@media (min-width: 1600px) {
+  :root {
+    --gutter: 64px;
+    --measure: 70ch;
+  }
+  body { font-size: 18px; }
+  .wrap { max-width: 1240px; }
+  .cine { --edge: max(var(--gutter), calc((100% - 1240px) / 2)); }
+  .cine__title { font-size: clamp(120px, 9vw, 168px); }
+  .section { padding: clamp(96px, 8vw, 148px) 0; }
+}
+
+/* ── Ultra-wide: 2200px and up ────────────────────────────────────────────── */
+/* The hero art is sized as a share of the viewport, so on an ultra-wide monitor
+   it would sprawl. Capping it keeps the composition intact. */
+@media (min-width: 2200px) {
+  .cine { min-height: min(84vh, 1000px); }
+  .cine__art { background-size: 1800px auto; background-position: 72% 42%; }
+}
+
+/* ── Small tablets and large phones: 641px to 899px ───────────────────────── */
+@media (min-width: 641px) and (max-width: 899px) {
+  /* Two columns is the right density here; three would crowd. */
+  .grid { grid-template-columns: repeat(2, 1fr); }
+  .figures { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ── Small phones: 380px and below ────────────────────────────────────────── */
+@media (max-width: 380px) {
+  :root { --gutter: 16px; }
+  body { font-size: 15.5px; }
+  .cine__title { font-size: clamp(34px, 12vw, 46px); letter-spacing: -0.035em; }
+  .cine__sub { font-size: 15px; }
+  .brand span:not(.brand__mark) { font-size: 16px; }
+  /* At this width the switch and the button together overflow the masthead, and
+     the button is the more important of the two. */
+  .theme-switch { display: none; }
+  .figures, .grid { grid-template-columns: 1fr; }
+  caption, th, td { padding-inline: 14px; }
+  .doc__meta { gap: 6px 16px; font-size: 12px; }
+}
+
+/* ── Short viewports: landscape phones and split-screen windows ───────────── */
+/* Height, not width, is the constraint here. A hero sized in vh becomes a wall
+   of padding when there are only 500 vertical pixels to work with. */
+@media (max-height: 560px) and (min-width: 641px) {
+  .cine {
+    min-height: 0;
+    padding-top: 92px;
+    padding-bottom: 48px;
+  }
+  .cine__title { font-size: clamp(38px, 7vh, 72px); }
+  .cine__sub { margin-top: 16px; }
+  .cine__actions { margin-top: 20px; }
+  .cine__meta--br { display: none; }
+  .masthead { position: static; }
+}
+
+/* A sticky masthead eats a third of the screen on a short landscape phone. */
+@media (max-height: 460px) {
+  .masthead { position: static; }
+  .cine { min-height: 0; padding-top: 40px; }
+  .cine__scroll { display: none; }
+}
+
+/* ── Coarse pointers and hover-less devices ───────────────────────────────── */
+/* Hover-driven affordances need a non-hover equivalent. The ticker pauses on
+   hover, which a touch device can never trigger, so it simply keeps moving; the
+   cards' lift is dropped rather than left as a state that cannot be reached. */
+@media (hover: none) {
+  .card:hover { transform: none; box-shadow: var(--lift-1); }
+  .btn:hover { transform: none; }
+}
+
+/* ── Foldables and very narrow tall windows ───────────────────────────────── */
+@media (max-width: 340px) {
+  .masthead__meta, .masthead__link { display: none; }
+  .glance { padding: 18px; }
+}
+
+/* ── High-density displays ────────────────────────────────────────────────── */
+/* Hairlines are the one thing that suffers at 2x: a 1px border can render as a
+   half-pixel and disappear. Nudging it up keeps the rules visible without
+   making them look heavy. */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .figures { gap: 0.5px; }
 }

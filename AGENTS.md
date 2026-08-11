@@ -108,7 +108,11 @@ is a well-set journal, not a SaaS template.
 ## Before pushing
 
 - Run `node verify.mjs` and `node verify-policy.mjs`. Both must pass.
-- Open both pages and check them at a narrow width, not just a desktop one.
+- Open all three pages and check them at a narrow width, not just a desktop one.
 - Confirm every internal link and anchor resolves.
+- Link to files, not to clean URLs. `privacy.html`, never `/privacy`. An
+  extensionless path is a host rewrite, so it 404s on a plain file server and on
+  a local copy. `verify.mjs` resolves every link against the disk, so a clean
+  URL fails the build.
 - The privacy policy URL is referenced by the Chrome Web Store listing. Do not
   rename or move `privacy.html`.

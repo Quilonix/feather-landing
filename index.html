@@ -5,20 +5,83 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Feather - Documents to Markdown, entirely in your browser</title>
 <meta name="description" content="Feather is a Chrome extension that converts PDF, Word, Excel and PowerPoint into clean Markdown locally in your browser, then attaches it to your AI chat. No upload, no account, no API key." />
-<link rel="canonical" href="https://quilonix.github.io/feather-landing/" />
+<link rel="canonical" href="https://feather.quilonix.in/" />
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
 
 <meta property="og:type" content="website" />
+<meta property="og:site_name" content="Feather" />
 <meta property="og:title" content="Feather - Documents to Markdown, entirely in your browser" />
 <meta property="og:description" content="Converts documents to clean Markdown locally and attaches them to your AI chat. Nothing is uploaded. No account, no API key." />
-<meta property="og:url" content="https://quilonix.github.io/feather-landing/" />
-<meta name="twitter:card" content="summary" />
+<meta property="og:url" content="https://feather.quilonix.in/" />
+<meta property="og:image" content="https://feather.quilonix.in/assets/og.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="A stippled eagle in flight shedding a feather, beside the words Documents in, Markdown out." />
+<meta property="og:locale" content="en" />
+<meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Feather - Documents to Markdown, entirely in your browser" />
 <meta name="twitter:description" content="Converts documents to clean Markdown locally and attaches them to your AI chat. Nothing is uploaded." />
+<meta name="twitter:image" content="https://feather.quilonix.in/assets/og.png" />
 
 <!-- Runs synchronously so the first paint is already in the right theme. -->
 <script src="theme-boot.js"></script>
+
+<!-- Tells Google it may use a full-size image in a result, which is what makes
+     a rich result show the share card rather than a thumbnail. -->
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+<!-- Colours the browser UI on mobile to match whichever theme is active. -->
+<meta name="theme-color" content="#fbfaf8" media="(prefers-color-scheme: light)" />
+<meta name="theme-color" content="#14140f" media="(prefers-color-scheme: dark)" />
+<meta name="author" content="Quilonix" />
+
+<!-- GOOGLE SEARCH CONSOLE
+     Verify with the HTML tag method and paste the tag Google gives you on the
+     line below. It looks like:
+       <meta name="google-site-verification" content="..." />
+     Prefer the DNS TXT record on quilonix.in if you have access, since that
+     verifies every subdomain at once and survives a redesign of this page.
+     After verifying, submit https://feather.quilonix.in/sitemap.xml under Sitemaps. -->
+
 <link rel="stylesheet" href="styles.css" />
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareApplication",
+      "name": "Feather",
+      "url": "https://feather.quilonix.in/",
+      "applicationCategory": "BrowserApplication",
+      "applicationSubCategory": "Chrome Extension",
+      "operatingSystem": "Chrome",
+      "description": "Converts PDF, Word, Excel and PowerPoint into clean Markdown entirely in the browser and attaches the result to an AI chat. Also extracts a whole conversation as Markdown so it can be continued in a different model.",
+      "image": "https://feather.quilonix.in/assets/og.png",
+      "featureList": [
+        "Convert PDF, DOCX, XLSX, PPTX, CSV, HTML, ODT, RTF, TXT and MD to Markdown",
+        "Runs entirely in the browser with no upload and no account",
+        "Attach the converted Markdown directly to an AI chat input",
+        "Extract a conversation as Markdown and continue it in another model",
+        "On-device OCR for scanned pages and images",
+        "Optional compression with your own Groq or Gemini API key"
+      ],
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "author": { "@type": "Organization", "name": "Quilonix", "url": "https://quilonix.in" },
+      "publisher": { "@type": "Organization", "name": "Quilonix", "url": "https://quilonix.in" }
+    },
+    {
+      "@type": "WebSite",
+      "name": "Feather",
+      "url": "https://feather.quilonix.in/",
+      "publisher": { "@type": "Organization", "name": "Quilonix" }
+    }
+  ]
+}
+</script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -54,9 +117,10 @@
 <main id="main">
 
   <!-- ── Hero ────────────────────────────────────────────────────────────── -->
-  <!-- A permanently dark, full-bleed band. It does not invert with the page
-       theme: the treatment depends on stipple-on-black, and a light version
-       would be a different design rather than the same one recoloured. -->
+  <!-- A full-bleed title card. It carries its own --cine-* palette rather than
+       reusing the page tokens, because the band needs more contrast than body
+       copy does. Both themes are defined, and the artwork is swapped per theme
+       rather than recoloured. -->
   <section class="cine" aria-labelledby="hero-title">
     <div class="cine__art" aria-hidden="true"></div>
 

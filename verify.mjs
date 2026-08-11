@@ -1,16 +1,32 @@
 import { readFileSync, existsSync } from "fs";
 
-const pages = ["index.html", "privacy.html"];
+// 404.html is held to the same structural, accessibility and theme rules as the
+// other pages, but it is exempt from the indexing block below: an error page is
+// served at whatever address the visitor mistyped, so a canonical tag or a
+// JSON-LD url would be a claim about a page that does not exist.
+const pages = [
+  { file: "index.html", indexable: true },
+  { file: "privacy.html", indexable: true },
+  { file: "404.html", indexable: false },
+];
 const css = readFileSync("styles.css", "utf8");
 const fail = [];
 const ok = [];
 const note = (list, msg) => list.push(msg);
 
-// Classes defined anywhere in the stylesheet.
+// Classes defined anywhere in the stylesheet. Comments and url() values are
+// stripped first: prose naming a class does not define one, and a file
+// extension inside url("logo.svg") is not a class either.
 const definedClasses = new Set();
-for (const m of css.matchAll(/\.([a-zA-Z][\w-]*)/g)) definedClasses.add(m[1]);
+const selectorText = css
+  .replace(/\/\*[\s\S]*?\*\//g, "")
+  .replace(/url\([^)]*\)/g, "url()");
+for (const m of selectorText.matchAll(/\.([a-zA-Z][\w-]*)/g)) definedClasses.add(m[1]);
+// Every class any page uses, accumulated across pages so the reverse check
+// below can find rules for a design that no longer ships.
+const usedClasses = new Set();
 
-for (const page of pages) {
+for (const { file: page, indexable } of pages) {
   const html = readFileSync(page, "utf8");
 
   // 1. Writing conventions.
@@ -23,7 +39,10 @@ for (const page of pages) {
   // 2. Every class used must exist in the stylesheet.
   const used = new Set();
   for (const m of html.matchAll(/class="([^"]+)"/g)) {
-    for (const c of m[1].trim().split(/\s+/)) used.add(c);
+    for (const c of m[1].trim().split(/\s+/)) {
+      used.add(c);
+      usedClasses.add(c);
+    }
   }
   const undefinedClasses = [...used].filter((c) => !definedClasses.has(c));
   undefinedClasses.length
@@ -40,7 +59,17 @@ for (const page of pages) {
 
   // 4. Relative file links must exist.
   const links = [...html.matchAll(/href="(?!https?:|mailto:|#)([^"]+)"/g)].map((m) => m[1]);
-  const missing = links.filter((l) => l !== "./" && !existsSync(l.replace(/[?#].*$/, "")));
+  // Links name the file that exists on disk, so the only path that needs
+  // resolving is the site root. Extensionless URLs are deliberately not
+  // supported here: they depend on a host rewrite, so a link to one is broken
+  // on a plain file server and on a local copy of the site.
+  const CLEAN = { "/": "index.html", "./": "index.html" };
+  const missing = links.filter((l) => {
+    const p = l.replace(/[?#].*$/, "");
+    if (p === "") return false;
+    const target = CLEAN[p] || p.replace(/^\//, "");
+    return !existsSync(target);
+  });
   missing.length
     ? note(fail, `${page}: links to missing files: ${missing.join(", ")}`)
     : note(ok, `${page}: all ${links.length} relative links exist`);
@@ -82,9 +111,121 @@ for (const page of pages) {
   /<html lang="en" data-theme="/.test(html)
     ? note(ok, `${page}: theme attribute present before script runs`)
     : note(fail, `${page}: no default data-theme on <html>`);
+
+  // 9. Indexing. A malformed JSON-LD block is worse than having none: Search
+  // Console reports it as an error and discards the page's markup. The error
+  // page is checked the other way round, since the failure mode there is
+  // claiming an address rather than lacking one.
+  if (!indexable) {
+    /<meta name="robots" content="noindex/.test(html)
+      ? note(ok, `${page}: noindex, so it cannot be indexed as a real page`)
+      : note(fail, `${page}: an error page must be noindex`);
+    /<link rel="canonical"/.test(html)
+      ? note(fail, `${page}: an error page must not declare a canonical URL`)
+      : note(ok, `${page}: no canonical, which is correct for an error page`);
+    /name="theme-color"/.test(html)
+      ? note(ok, `${page}: theme-color set`)
+      : note(fail, `${page}: no theme-color`);
+    continue;
+  }
+
+  const ld = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)];
+  if (ld.length === 0) {
+    note(fail, `${page}: no JSON-LD structured data`);
+  } else {
+    let bad = 0;
+    for (const b of ld) {
+      try {
+        JSON.parse(b[1]);
+      } catch (e) {
+        bad++;
+        note(fail, `${page}: JSON-LD does not parse: ${e.message}`);
+      }
+    }
+    if (bad === 0) note(ok, `${page}: ${ld.length} JSON-LD block(s) parse`);
+  }
+
+  // Crawlers reject a relative og:image, so this must be absolute.
+  /og:image" content="https:\/\//.test(html)
+    ? note(ok, `${page}: share image is an absolute URL`)
+    : note(fail, `${page}: og:image missing or relative`);
+  /<link rel="canonical" href="https:\/\/feather\.quilonix\.in/.test(html)
+    ? note(ok, `${page}: canonical points at the live domain`)
+    : note(fail, `${page}: canonical missing or on the wrong host`);
+  /name="theme-color"/.test(html)
+    ? note(ok, `${page}: theme-color set`)
+    : note(fail, `${page}: no theme-color`);
 }
 
-// 7. Colour may only be declared inside a palette block (:root or a
+// 10. The reverse of check 2. A class with a rule but no markup is a leftover
+// from a design that no longer ships, and it costs every visitor bytes to
+// download rules nothing can match.
+const deadClasses = [...definedClasses].filter((c) => !usedClasses.has(c));
+deadClasses.length
+  ? note(fail, `styles.css: rules for classes no page uses: ${deadClasses.sort().join(", ")}`)
+  : note(ok, `styles.css: every one of the ${definedClasses.size} classes is used by a page`);
+
+// 11. A fragment link into another page is invisible to check 3, which only
+// looks at the page it started on. These are the links most likely to rot,
+// because renaming a section id on one page cannot be seen from the other.
+const idsOf = new Map();
+for (const { file } of pages) {
+  const src = readFileSync(file, "utf8");
+  idsOf.set(file, new Set([...src.matchAll(/id="([^"]+)"/g)].map((m) => m[1])));
+}
+let crossChecked = 0;
+for (const { file } of pages) {
+  const src = readFileSync(file, "utf8");
+  for (const m of src.matchAll(/href="(?!https?:|mailto:)([^"#]+)#([^"]+)"/g)) {
+    const target = m[1] === "/" || m[1] === "./" ? "index.html" : m[1].replace(/^\//, "");
+    const ids = idsOf.get(target);
+    if (!ids) {
+      note(fail, `${file}: links to #${m[2]} on ${target}, which is not a checked page`);
+      continue;
+    }
+    crossChecked++;
+    if (!ids.has(m[2])) note(fail, `${file}: #${m[2]} does not exist on ${target}`);
+  }
+}
+note(ok, `all ${crossChecked} cross-page anchor(s) resolve`);
+
+// 12. The sitemap, the canonical tags and the files on disk have to agree.
+// Search Console reports a canonical that is absent from the sitemap as
+// "discovered but not submitted", and a sitemap URL that does not resolve as a
+// crawl error, and neither shows up until after a deploy.
+const sitemap = readFileSync("sitemap.xml", "utf8");
+const locs = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
+const asFile = (url) => {
+  const p = url.replace(/^https:\/\/feather\.quilonix\.in/, "");
+  return p === "" || p === "/" ? "index.html" : p.replace(/^\//, "");
+};
+const unreachable = locs.filter((l) => !existsSync(asFile(l)));
+unreachable.length
+  ? note(fail, `sitemap.xml: URLs with no file behind them: ${unreachable.join(", ")}`)
+  : note(ok, `sitemap.xml: all ${locs.length} URLs resolve to a file`);
+
+const canonicals = pages
+  .filter((p) => p.indexable)
+  .map((p) => ({
+    file: p.file,
+    url: (readFileSync(p.file, "utf8").match(/<link rel="canonical" href="([^"]+)"/) || [])[1],
+  }));
+for (const c of canonicals) {
+  locs.includes(c.url)
+    ? note(ok, `${c.file}: canonical is listed in the sitemap`)
+    : note(fail, `${c.file}: canonical ${c.url} is not a <loc> in sitemap.xml`);
+  // A canonical must name the page it is on, or two URLs claim to be the same
+  // page and the crawler picks one.
+  asFile(c.url || "") === c.file || (c.file === "index.html" && asFile(c.url || "") === "index.html")
+    ? note(ok, `${c.file}: canonical points at itself`)
+    : note(fail, `${c.file}: canonical ${c.url} does not resolve to ${c.file}`);
+}
+const orphanLocs = locs.filter((l) => !canonicals.some((c) => c.url === l));
+orphanLocs.length
+  ? note(fail, `sitemap.xml: URLs no page claims as its canonical: ${orphanLocs.join(", ")}`)
+  : note(ok, "sitemap.xml: every URL is some page's canonical");
+
+// 13. Colour may only be declared inside a palette block (:root or a
 // [data-theme] block). Anything else means a rule hardcoded a colour and will
 // not flip with the theme. Comments are stripped first, since prose about a
 // colour is not a declaration of one.
