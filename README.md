@@ -105,6 +105,13 @@ The privacy policy must stay reachable at a stable URL, because the Chrome
 Web Store listing points at it. Do not rename `privacy.html` without updating
 the store listing.
 
+`google2b6793271aeeeccc.html` is the Google Search Console verification file for
+`feather.quilonix.in`. It is 54 bytes of plain text whose contents name the file
+itself, so it cannot be renamed, edited, or disallowed in `robots.txt`. Search
+Console refetches it and verification lapses if it stops resolving. A DNS TXT
+record on `quilonix.in` would cover every subdomain at once and is worth adding
+alongside it.
+
 ## Accuracy
 
 Every number and claim on these pages reflects what the extension actually

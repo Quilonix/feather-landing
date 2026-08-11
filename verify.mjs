@@ -1,4 +1,4 @@
-import { readFileSync, existsSync } from "fs";
+import { readFileSync, existsSync, readdirSync } from "fs";
 
 // 404.html is held to the same structural, accessibility and theme rules as the
 // other pages, but it is exempt from the indexing block below: an error page is
@@ -224,6 +224,27 @@ const orphanLocs = locs.filter((l) => !canonicals.some((c) => c.url === l));
 orphanLocs.length
   ? note(fail, `sitemap.xml: URLs no page claims as its canonical: ${orphanLocs.join(", ")}`)
   : note(ok, "sitemap.xml: every URL is some page's canonical");
+
+// 12b. Search Console verification is a file whose contents name the file
+// itself, so renaming or editing it breaks verification in a way no page
+// reveals. Google refetches it periodically and verification lapses silently if
+// it stops resolving, which is also why robots.txt must not disallow it. Matched
+// by shape rather than by a hardcoded token, so re-verifying with a new file
+// needs no change here.
+const gscFiles = readdirSync(".").filter((f) => /^google[0-9a-f]{8,}\.html$/.test(f));
+if (gscFiles.length === 0) {
+  note(fail, "no Google Search Console verification file at the site root");
+} else {
+  const robots = readFileSync("robots.txt", "utf8");
+  for (const f of gscFiles) {
+    readFileSync(f, "utf8").trim() === `google-site-verification: ${f}`
+      ? note(ok, `${f}: verification file names itself, so it is intact`)
+      : note(fail, `${f}: contents do not name the file, so Google will reject it`);
+    new RegExp(`^\\s*Disallow:\\s*/${f}\\s*$`, "mi").test(robots)
+      ? note(fail, `${f}: robots.txt disallows the file Google has to fetch`)
+      : note(ok, `${f}: reachable, not disallowed in robots.txt`);
+  }
+}
 
 // 13. Colour may only be declared inside a palette block (:root or a
 // [data-theme] block). Anything else means a rule hardcoded a colour and will

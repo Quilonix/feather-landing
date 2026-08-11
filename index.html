@@ -5,6 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Feather - Documents to Markdown, entirely in your browser</title>
 <meta name="description" content="Feather is a Chrome extension that converts PDF, Word, Excel and PowerPoint into clean Markdown locally in your browser, then attaches it to your AI chat. No upload, no account, no API key." />
+
+<!-- This tag does not rank anything. Google has ignored meta keywords since
+     2009 and Bing treats a stuffed one as a spam signal, so it is kept short and
+     truthful rather than exhaustive. The terms that actually carry weight are the
+     ones in the title, the description, the headings and the body copy, which is
+     where the same words appear. -->
+<meta name="keywords" content="PDF to Markdown, DOCX to Markdown, Chrome extension, document to Markdown converter, in-browser conversion, no upload, browser OCR, AI chat attachment, export chat as Markdown" />
 <link rel="canonical" href="https://feather.quilonix.in/" />
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
 
@@ -35,11 +42,12 @@
 <meta name="author" content="Quilonix" />
 
 <!-- GOOGLE SEARCH CONSOLE
-     Verify with the HTML tag method and paste the tag Google gives you on the
-     line below. It looks like:
-       <meta name="google-site-verification" content="..." />
-     Prefer the DNS TXT record on quilonix.in if you have access, since that
-     verifies every subdomain at once and survives a redesign of this page.
+     Verified by file rather than by a meta tag, so nothing needs to go on this
+     page: google2b6793271aeeeccc.html sits at the site root. Do not rename, edit
+     or delete it, and do not disallow it in robots.txt. Google refetches it
+     periodically and verification lapses if it stops resolving.
+     A DNS TXT record on quilonix.in is still worth adding if you have access to
+     the zone, since one record covers every subdomain and outlives any one file.
      After verifying, submit https://feather.quilonix.in/sitemap.xml under Sitemaps. -->
 
 <link rel="stylesheet" href="styles.css" />
@@ -65,6 +73,9 @@
         "On-device OCR for scanned pages and images",
         "Optional compression with your own Groq or Gemini API key"
       ],
+      "keywords": "PDF to Markdown, DOCX to Markdown, XLSX to Markdown, document converter, Chrome extension, in-browser conversion, OCR, AI chat, Markdown",
+      "isAccessibleForFree": true,
+      "browserRequirements": "Requires a Chromium based browser with Manifest V3 support",
       "offers": {
         "@type": "Offer",
         "price": "0",
