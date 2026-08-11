@@ -250,7 +250,7 @@ if (paletteBlocks.length >= 2) {
   // Tokens that are intentionally light-only: geometry and typography do not
   // change between themes, only colour does.
   const colourish = (n) =>
-    !/(--border-w|--offset|--gutter|--measure|--mono|--sans|--serif|--radius|--r-)/.test(n);
+    !/(--border-w|--offset|--gutter|--measure|--head-h|--mono|--sans|--serif|--radius|--r-)/.test(n);
   const missingInDark = lightOnly.filter(colourish);
   missingInDark.length
     ? note(fail, `styles.css: colour tokens missing from the dark palette: ${missingInDark.join(", ")}`)

@@ -74,6 +74,12 @@
   --gutter: clamp(20px, 5vw, 56px);
   --measure: 66ch;
 
+  /* Height of the sticky bar. A token because three things have to agree on it:
+     the bar itself, the scroll offset that stops an anchored heading landing
+     underneath it, and the shorter bar a phone gets. Fluid rather than switched
+     at a breakpoint, so the two ends interpolate instead of jumping. */
+  --head-h: clamp(58px, 7vw, 66px);
+
   --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua",
     "Hoefler Text", Georgia, "Times New Roman", serif;
   --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto,
@@ -230,14 +236,28 @@ a { color: inherit; }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 20px;
-  min-height: 66px;
+  /* Narrows with the viewport, so on a phone the gap is not competing with the
+     controls for the room they need. */
+  gap: clamp(12px, 2vw, 24px);
+  min-height: var(--head-h);
 }
+
+/* Nothing in the bar may wrap. A label that breaks onto a second line changes
+   the height of a sticky element, which moves the whole page under it, so every
+   run of text in here is held on one line and the bar keeps one height at every
+   width. */
+.masthead__inner :where(a, span, button) { white-space: nowrap; }
+
+/* Anything an in-page link can target has to clear the sticky bar, or the
+   heading it points at arrives hidden behind it. Driven by the bar's own height
+   so the two cannot drift apart. */
+[id] { scroll-margin-top: calc(var(--head-h) + 20px); }
 
 .brand {
   display: flex;
   align-items: center;
   gap: 11px;
+  flex-shrink: 0;
   font-family: var(--serif);
   font-size: 20px;
   font-weight: 600;
@@ -248,7 +268,8 @@ a { color: inherit; }
 .masthead__meta {
   display: none;
   align-items: center;
-  gap: 26px;
+  gap: 22px;
+  flex-shrink: 0;
   font-size: 11.5px;
   font-weight: 500;
   letter-spacing: 0.12em;
@@ -256,12 +277,18 @@ a { color: inherit; }
   color: var(--faint);
 }
 
-@media (min-width: 1000px) { .masthead__meta { display: flex; } }
+/* 1280px, not 1000px. The landing page's bar also carries four nav links, the
+   theme switch and the call to action, and at 1000px those plus the meta labels
+   add up to more than the container is wide, so something had to give: the links
+   squeezed and their text wrapped. The labels are the least important thing in
+   the bar, so they are what waits for room. */
+@media (min-width: 1280px) { .masthead__meta { display: flex; } }
 
 .masthead__nav {
   display: flex;
   align-items: center;
   gap: 6px;
+  flex-shrink: 0;
 }
 
 .masthead__link {
@@ -305,6 +332,7 @@ a { color: inherit; }
   align-items: center;
   gap: 2px;
   padding: 3px;
+  flex-shrink: 0;
   border: 1px solid var(--rule);
   border-radius: 999px;
   background: var(--paper-sunken);
@@ -319,7 +347,11 @@ a { color: inherit; }
   font-size: 11.5px;
   font-weight: 500;
   letter-spacing: 0.06em;
-  padding: 6px 11px;
+  /* The horizontal padding is what gives way on a narrow screen. Tightening it
+     keeps all three options reachable at every width, which hiding one of them
+     did not: Auto is the default, so a phone was showing a switch with nothing
+     selected and no way to get back to following the system. */
+  padding: 6px clamp(8px, 1.6vw, 11px);
   border-radius: 999px;
   cursor: pointer;
   transition: color 150ms ease, background 150ms ease, box-shadow 150ms ease;
@@ -331,10 +363,6 @@ a { color: inherit; }
   background: var(--paper-raised);
   color: var(--ink);
   box-shadow: var(--lift-1);
-}
-
-@media (max-width: 780px) {
-  .theme-switch button[data-theme-set="auto"] { display: none; }
 }
 
 /* ── Buttons ──────────────────────────────────────────────────────────────── */
@@ -1116,7 +1144,6 @@ td.mono, th.mono { font-family: var(--mono); font-size: 13.5px; color: var(--ink
   padding-bottom: 0;
   border-bottom: 0;
   margin-bottom: 18px;
-  scroll-margin-top: 92px;
   max-width: none;
 }
 
@@ -1205,7 +1232,6 @@ html[data-motion="on"] [data-reveal][data-delay="4"] { transition-delay: 360ms; 
 
 @media (max-width: 640px) {
   body { font-size: 16px; }
-  .masthead__inner { min-height: 58px; }
   .brand { font-size: 18px; }
 
   .step { grid-template-columns: 40px 1fr; padding: 22px 0; }
@@ -1230,11 +1256,18 @@ html[data-motion="on"] [data-reveal][data-delay="4"] { transition-delay: 360ms; 
   }
 }
 
-/* Tap targets clear the 44px guideline on touch devices. */
+/* Tap targets clear the 44px guideline on touch devices. Height is bought with
+   min-height rather than with more padding, because padding widens a control as
+   well as heightening it, and the masthead runs out of width long before it runs
+   out of height. The previous `.btn { padding }` here also outranked `.btn--sm`
+   on source order, so the bar's small button was silently full size on every
+   phone, which is what pushed the row over the edge on a narrow screen. */
 @media (pointer: coarse) {
-  .masthead__link { padding: 12px 14px; }
-  .theme-switch button { padding: 11px 14px; }
-  .btn { padding: 15px 24px; }
+  .masthead__link,
+  .theme-switch button,
+  .btn {
+    min-height: 44px;
+  }
 }
 
 @media print {
@@ -1372,9 +1405,6 @@ html, body { max-width: 100%; overflow-x: hidden; }
   .cine__title { font-size: clamp(34px, 12vw, 46px); letter-spacing: -0.035em; }
   .cine__sub { font-size: 15px; }
   .brand span:not(.brand__mark) { font-size: 16px; }
-  /* At this width the switch and the button together overflow the masthead, and
-     the button is the more important of the two. */
-  .theme-switch { display: none; }
   .figures, .grid { grid-template-columns: 1fr; }
   caption, th, td { padding-inline: 14px; }
   .doc__meta { gap: 6px 16px; font-size: 12px; }
@@ -1414,7 +1444,12 @@ html, body { max-width: 100%; overflow-x: hidden; }
 
 /* ── Foldables and very narrow tall windows ───────────────────────────────── */
 @media (max-width: 340px) {
-  .masthead__meta, .masthead__link { display: none; }
+  /* Below this the wordmark, three theme options and the call to action cannot
+     share one row at a 44px tap size. The word is what goes, not a control: the
+     mark still identifies the page, and the hero repeats the name a few hundred
+     pixels below. The meta labels and nav links need no rule here, since they
+     are already gone at 1280px and 700px respectively. */
+  .brand span:not(.brand__mark) { display: none; }
   .glance { padding: 18px; }
 }
 
