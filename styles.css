@@ -59,6 +59,9 @@
   --rule: #e4e0d8;
   --rule-strong: #d0cbc0;
 
+  --mark-bg: #ece8de;
+  --mark-ink: #14130f;
+
   /* Elevation, kept almost subliminal. Two layers: a tight contact shadow and a
      wide soft one. Anything heavier turns editorial into corporate. */
   --lift-1: 0 1px 2px rgba(20, 19, 15, 0.04);
@@ -120,6 +123,9 @@ html[data-theme="dark"] {
   --rule: #2b2a24;
   --rule-strong: #3d3b33;
 
+  --mark-bg: #272520;
+  --mark-ink: #f3f1ea;
+
   --lift-1: 0 1px 2px rgba(0, 0, 0, 0.4);
   --lift-2: 0 1px 2px rgba(0, 0, 0, 0.4), 0 12px 34px -18px rgba(0, 0, 0, 0.7);
   --lift-3: 0 1px 2px rgba(0, 0, 0, 0.5), 0 24px 56px -26px rgba(0, 0, 0, 0.8);
@@ -141,6 +147,12 @@ html[data-theme="dark"] {
 html {
   -webkit-text-size-adjust: 100%;
   scroll-behavior: smooth;
+}
+
+mark {
+  background-color: var(--mark-bg);
+  color: var(--mark-ink);
+  border-radius: 2px;
 }
 
 @media (prefers-reduced-motion: reduce) {
