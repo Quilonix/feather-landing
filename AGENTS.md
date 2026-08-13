@@ -72,9 +72,10 @@ is a well-set journal, not a SaaS template.
   difference: surveys put sans-serif usage in SaaS above 90%, so a serif display
   face is the cheapest way to look unlike the category while still reading as
   serious. Do not "simplify" headings to the sans stack.
-- **No CSS framework and no web fonts.** Both are deliberate. A privacy-first
-  product should not make third-party requests on its own marketing page, and
-  system stacks mean no render blocking and no layout shift.
+- **No CSS framework and no web fonts.** Both are deliberate. System stacks
+  mean no render blocking and no layout shift. A privacy-first product limits
+  third-party requests on its own marketing page; the only exception here is the
+  PostHog analytics script for anonymous telemetry.
 - **Two palettes, warm neutral only.** Every colour token must be defined in
   both the `:root` and the `html[data-theme="dark"]` block, or it silently keeps
   its light value in dark mode. `verify.mjs` checks this.

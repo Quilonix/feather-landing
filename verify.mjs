@@ -58,7 +58,7 @@ for (const { file: page, indexable } of pages) {
     : note(ok, `${page}: all ${anchors.length} in-page anchors resolve`);
 
   // 4. Relative file links must exist.
-  const links = [...html.matchAll(/href="(?!https?:|mailto:|#)([^"]+)"/g)].map((m) => m[1]);
+  const links = [...html.matchAll(/href="(?!https?:|mailto:|chrome:|#)([^"]+)"/g)].map((m) => m[1]);
   // Links name the file that exists on disk, so the only path that needs
   // resolving is the site root. Extensionless URLs are deliberately not
   // supported here: they depend on a host rewrite, so a link to one is broken
