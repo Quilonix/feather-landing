@@ -33,9 +33,7 @@ token-savings numbers instead of one flattering one. Keep that standard:
 because every such link would 404 for visitors. `verify.mjs` fails the build if
 one appears.
 
-The Chrome Web Store is the only distribution channel. Until the listing is
-live, the call to action is an email address, not a download. Do not add a
-manual-install path, a zip link, or a "build from source" section.
+The Chrome Web Store will be the main distribution channel. However, until the listing is live, manual installation is allowed. You may provide a zip download link and a manual-install path on the landing page.
 
 ## Logo and artwork
 
