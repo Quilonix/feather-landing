@@ -779,12 +779,12 @@ html[data-theme="dark"] .cine__art {
   border-color: var(--rule-strong);
   box-shadow: none;
 }
-.section--invert .card p { color: var(--ink-2); }
+.section--invert .card p { color: var(--paper); }
 .section--invert h2,
 .section--invert h3 { color: var(--paper); }
 .section--invert .footnotes { border-color: var(--rule-strong); }
 .section--invert th { color: var(--paper); border-color: var(--rule-strong); }
-.section--invert td { border-color: var(--rule-strong); color: var(--ink-2); }
+.section--invert td { border-color: var(--rule-strong); color: var(--paper); }
 
 /* In dark mode an inverted block would be light-on-light against the page, so
    it borrows the raised surface instead of the ink one. */
