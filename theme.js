@@ -67,6 +67,20 @@
       apply(mode);
     });
 
+    document.addEventListener("click", function (e) {
+      var copyBtn = e.target.closest ? e.target.closest("[data-copy]") : null;
+      if (!copyBtn) return;
+      var text = copyBtn.getAttribute("data-copy");
+      if (!text || !navigator.clipboard) return;
+      navigator.clipboard.writeText(text).then(function () {
+        var original = copyBtn.textContent;
+        copyBtn.textContent = "Copied!";
+        setTimeout(function () {
+          copyBtn.textContent = original;
+        }, 1200);
+      });
+    });
+
     // ---- Scroll reveal --------------------------------------------------
     // Anything marked [data-reveal] fades up once as it enters the viewport.
     // Skipped entirely for reduced-motion users and when IntersectionObserver

@@ -214,6 +214,25 @@ a { color: inherit; }
   letter-spacing: 0;
 }
 
+.copy-code {
+  font-family: var(--mono);
+  font-size: 0.86em;
+  background: var(--paper-sunken);
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  padding: 1.5px 5px;
+  color: var(--ink);
+  cursor: pointer;
+  appearance: none;
+  transition: background-color 0.15s ease;
+}
+.copy-code:hover {
+  background: var(--rule);
+}
+.copy-code:active {
+  background: var(--paper-sunken);
+}
+
 /* Letterspaced small caps for metadata. The workhorse of editorial hierarchy:
    it signals "label" without needing a box, a colour, or bold weight. */
 .label {
