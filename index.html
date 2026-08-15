@@ -521,6 +521,7 @@
         <li>PDF table detection is heuristic. It handles clean grid tables well and can misjudge unusual layouts.</li>
         <li>Diagrams drawn as vector paths are not extracted as images. Capturing them would require rasterizing the page, which defeats the purpose.</li>
         <li>OCR adds real time on scan-heavy PDFs. It only runs on pages that need it, but a fully scanned 100-page document still takes a while.</li>
+        <li>To bypass strict Content Security Policies on sites like Gemini, the PDF parser is bundled directly in and runs synchronously on the main thread. This guarantees it works everywhere, but trades a roughly 1MB larger bundle size and freezes the tab while a PDF is actively parsing.</li>
         <li>Hand-written attach adapters exist for three sites. Everywhere else uses generic strategies that work on many sites but are not verified per site, and fall back to download plus clipboard.</li>
         <li>Extracting a chat reads what the page has rendered. On a very long conversation, some sites keep only recent turns in the document, so scroll up to load the earlier ones first.</li>
         <li>There is no single guaranteed token-savings number. See the footnotes above.</li>
