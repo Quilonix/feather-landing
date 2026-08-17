@@ -28,8 +28,8 @@ rewrite. `vercel.json` redirects `/privacy` and `/privacy-policy` to the file so
 any address already published keeps working.
 
 Distribution note: the extension repository is private, so nothing here links
-to it. The Chrome Web Store is the only channel, and until the listing is live
-the call to action is an email address.
+to it. The Chrome Web Store is the main channel:
+https://chromewebstore.google.com/detail/hohblnepjgeffeoojlogfhopfmplebbn
 
 ## Run it
 
